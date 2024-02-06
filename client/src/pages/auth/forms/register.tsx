@@ -1,31 +1,15 @@
-import { useState, ChangeEvent } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../../../constant';
-
-interface FormData {
-  username: string;
-  email: string;
-  password: string;
-}
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input } from "antd";
+import { Link } from "react-router-dom";
+import { MailOutlined } from "@ant-design/icons";
 
 const Register = () => {
-  const [formData, setFormData] = useState<FormData>({
-    username: '',
-    email: '',
-    password: ''
-  });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async () => {
+  const onFinish = async (values: string[]) => {
     try {
-      await axios.post(`${API_BASE_URL}api/v1/users/register`, formData);
+      await axios.post(`${API_BASE_URL}api/v1/users/register`, values);
       console.log('Registration successful');
     } catch (error) {
       console.error('Registration failed:', error);
@@ -33,11 +17,48 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <input type="text" name="username" placeholder="username" value={formData.username} onChange={handleChange} />
-      <input type="text" name="email" placeholder="email" value={formData.email} onChange={handleChange} />
-      <input type="text" name="password" placeholder="password" value={formData.password} onChange={handleChange} />
-      <button onClick={handleSubmit}>Register</button>
+    <div className="flex justify-center items-center h-[90vh]">
+      <Form
+        className="w-[400px]"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+      >
+        <Form.Item
+          name="email"
+          rules={[{ required: true, message: "Please input your email!" }]}
+        >
+          <Input
+            prefix={<MailOutlined />}
+            placeholder="Email"
+          />
+        </Form.Item>
+        <Form.Item
+          name="username"
+          rules={[{ required: true, message: "Please input your Username!" }]}
+        >
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Username"
+          />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: "Please input your Password!" }]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <Button htmlType="submit" className="w-full">
+            Register
+          </Button>
+          Or <Link to={'/auth/login'}>login now!</Link>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

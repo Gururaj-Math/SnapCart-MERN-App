@@ -1,37 +1,17 @@
-import { useState, ChangeEvent, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-
-interface LoginData {
-  username: string;
-  password: string;
-}
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input } from "antd";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-  const [loginData, setLoginData] = useState<LoginData>({
-    username: "",
-    password: "",
-  });
+  const [_, setCookie] = useCookies(["access_token"]);
 
-  const [cookie, setCookie] = useCookies(["access_token"]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setLoginData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  useEffect(() => {
-    console.log("cookie data:", cookie);
-  }, [cookie]);
-
-  const handleSubmit = async () => {
+  const onFinish = async (values: string[]) => {
     try {
       const res = await axios.post(
         "http://localhost:3000/api/v1/users/login",
-        loginData
+        values
       );
       console.log("Login successful", res);
 
@@ -42,22 +22,39 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        name="username"
-        placeholder="username"
-        value={loginData.username}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="password"
-        value={loginData.password}
-        onChange={handleChange}
-      />
-      <button onClick={handleSubmit}>Login</button>
+    <div className="flex justify-center items-center h-[90vh]">
+      <Form
+        className="w-[400px]"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+      >
+        <Form.Item
+          name="username"
+          rules={[{ required: true, message: "Please input your Username!" }]}
+        >
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Username"
+          />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: "Please input your Password!" }]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <Button htmlType="submit" className="w-full">
+            Log in
+          </Button>
+          Or <Link to={'/auth/register'}>register now!</Link>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
