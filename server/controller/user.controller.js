@@ -3,20 +3,22 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/AsyncHandler.js";
 import { User } from "../models/user.model.js";
 
+// returns access token and refresh token
 const generateTokens = async (userId) => {
-    try {
-      const user = await User.findById(userId);
-      const accessToken = user.generateAccessToken();
-      const refreshToken = user.generateRefreshToken();
-  
-      user.refreshToken = refreshToken; 
-      await user.save();
-  
-      return { accessToken, refreshToken };
-    } catch (error) {
-      throw new ApiError(500, `Something went wrong while generating tokens`);
-    }
-  };
+  try {
+    const user = await User.findById(userId);
+    const accessToken = await user.generateAccessToken(); 
+    const refreshToken = await user.generateRefreshToken();
+
+    user.refreshToken = refreshToken; 
+    await user.save();
+
+    return { accessToken, refreshToken };
+  } catch (error) {
+    throw new ApiError(500, `Something went wrong while generating tokens`);
+  }
+};
+
 
 const registerUser = asyncHandler(async (req, resp) => {
   const { username, email, password } = req.body;
