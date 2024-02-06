@@ -3,19 +3,20 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/AsyncHandler.js";
 import { User } from "../models/user.model.js";
 
-const generateAccessToken = async (userId) => {
-  try {
-    const user = await User.findById(userId);
-    const accessToken = await user.generateAccessToken();
-
-    return { accessToken };
-  } catch (error) {
-    throw new ApiError(
-      500,
-      `Something went wrong while generating access token`
-    );
-  }
-};
+const generateTokens = async (userId) => {
+    try {
+      const user = await User.findById(userId);
+      const accessToken = user.generateAccessToken();
+      const refreshToken = user.generateRefreshToken();
+  
+      user.refreshToken = refreshToken; 
+      await user.save();
+  
+      return { accessToken, refreshToken };
+    } catch (error) {
+      throw new ApiError(500, `Something went wrong while generating tokens`);
+    }
+  };
 
 const registerUser = asyncHandler(async (req, resp) => {
   const { username, email, password } = req.body;
@@ -46,41 +47,41 @@ const registerUser = asyncHandler(async (req, resp) => {
     .json(new ApiResponse(200, createdUser, `User Register Successfully`));
 });
 
-const loginUser = asyncHandler(async (req, resp) => {
-  const { username, password } = req.body;
-
-  if (!username) {
-    throw new ApiError(400, `Username is required`);
-  }
-
-  const user = await User.findOne({ username });
-
-  if (!user) {
-    throw new ApiError(400, `User does not exist`);
-  }
-
-  const CheckPassword = await user.isPasswordCorrect(password);
-
-  if (!CheckPassword) {
-    throw new ApiError(401, `Invalid Password`);
-  }
-
-  // access token
-
-  const { accessToken } = await generateAccessToken(user._id);
-
-  const UserInfo = await User.findById(user._id).select(" --password");
-
-  return resp.status(200).json(
-    new ApiResponse(
-      200,
-      {
-        user: UserInfo,
-        access_token: accessToken,
-      },
-      `User logged In Successfully`
-    )
-  );
-});
+const loginUser = asyncHandler(async (req, res) => {
+    const { username, password } = req.body;
+  
+    if (!username || !password) {
+      throw new ApiError(400, `Username and password are required`);
+    }
+  
+    const user = await User.findOne({ username });
+  
+    if (!user) {
+      throw new ApiError(400, `User does not exist`);
+    }
+  
+    const isPasswordCorrect = await user.isPasswordCorrect(password);
+  
+    if (!isPasswordCorrect) {
+      throw new ApiError(401, `Invalid password`);
+    }
+  
+    const { accessToken, refreshToken } = await generateTokens(user._id);
+  
+    const userInfo = await User.findById(user._id).select("-password");
+  
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        {
+          user: userInfo,
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        },
+        `User logged in successfully`
+      )
+    );
+  });
+  
 
 export { registerUser, loginUser };
