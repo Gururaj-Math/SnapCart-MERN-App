@@ -2,21 +2,33 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  logInStart,
+  logInSuccess,
+  logInFailure,
+} from "../../../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const [_, setCookie] = useCookies(["access_token"]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  // const { loading, error } = useSelector((state) => state.user);
 
   const onFinish = async (values: string[]) => {
     try {
+      dispatch(logInStart());
       const res = await axios.post(
         "http://localhost:3000/api/v1/users/login",
         values
       );
+      dispatch(logInSuccess(res.data.data.user));
+      navigate("/")
       console.log("Login successful", res);
-
       setCookie("access_token", res.data.data.access_token);
     } catch (error) {
+      dispatch(logInFailure());
       console.error("Login failed:", error);
     }
   };
@@ -52,7 +64,7 @@ const Login = () => {
           <Button htmlType="submit" className="w-full">
             Log in
           </Button>
-          Or <Link to={'/auth/register'}>register now!</Link>
+          Or <Link to={"/auth/register"}>register now!</Link>
         </Form.Item>
       </Form>
     </div>
