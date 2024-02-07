@@ -9,7 +9,7 @@ const Register = () => {
 
   const onFinish = async (values: string[]) => {
     try {
-      await axios.post(`${API_BASE_URL}api/v1/users/register`, values);
+      await axios.post(`${API_BASE_URL}users/register`, values);
       console.log('Registration successful');
     } catch (error) {
       console.error('Registration failed:', error);

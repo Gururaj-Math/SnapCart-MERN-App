@@ -16,7 +16,7 @@ body {
 
 :root {
     --primary-color: #000000;
-    --second-color: #253238;
+    --second-color: #ffffff;
     --white-color: #ffffff;
     --black-color: #000000;
 }
@@ -62,3 +62,25 @@ body {
     background: transparent !important;
     border-color: var(--primary-color) !important;
 }
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  

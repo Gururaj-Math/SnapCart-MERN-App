@@ -2,49 +2,54 @@ import React, { ReactNode } from "react";
 import {
   BookOutlined,
   HomeOutlined,
+  LogoutOutlined,
   SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, theme } from "antd";
+import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 interface SidebarProps {
   children: ReactNode;
 }
 
 const items = [
-    {
-      key: "1",
-      icon: <UserOutlined />,
-      label: "Profile",
-      path: "/profile", 
-    },
-    {
-      key: "2",
-      icon: <HomeOutlined />,
-      label: "Feed",
-      path: "/", 
-    },
-    {
-      key: "3",
-      icon: <BookOutlined />,
-      label: "Saved Posts",
-      path: "/saved-posts", 
-    },
-    {
-      key: "4",
-      icon: <SearchOutlined />,
-      label: "Search",
-      path: "/search",
-    },
-  ];
+  {
+    key: "1",
+    icon: <UserOutlined />,
+    label: "Profile",
+    path: "/profile",
+  },
+  {
+    key: "2",
+    icon: <HomeOutlined />,
+    label: "Feed",
+    path: "/",
+  },
+  {
+    key: "3",
+    icon: <BookOutlined />,
+    label: "Saved Posts",
+    path: "/saved-posts",
+  },
+  {
+    key: "4",
+    icon: <SearchOutlined />,
+    label: "Search",
+    path: "/search",
+  },
+  {
+    key: "5",
+    icon: <LogoutOutlined />,
+    label: "Logout",
+    path: "/auth/login",
+  },
+];
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+ 
 
   return (
     <Layout hasSider>
@@ -58,7 +63,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
           bottom: 0,
         }}
       >
-        <div className="demo-logo-vertical text-white text-center text-2xl p-4">SnapCart</div>
+        <div className="demo-logo-vertical text-white text-center text-2xl p-4">
+          SnapCart
+        </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["2"]}>
           {items.map((item) => (
             <Menu.Item key={item.key} icon={item.icon}>
@@ -68,10 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </Menu>
       </Sider>
       <Layout style={{ marginLeft: 200 }}>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
-        <Content style={{ overflow: "initial" }}>
-          {children}
-        </Content>
+        <Content style={{ overflow: "initial", height: "90vh" }}>{children}</Content>
         <Footer style={{ textAlign: "center" }}></Footer>
       </Layout>
     </Layout>

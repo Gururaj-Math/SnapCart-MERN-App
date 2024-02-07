@@ -21,7 +21,7 @@ const Login = () => {
     try {
       dispatch(logInStart());
       const res = await axios.post(
-        `${API_BASE_URL}api/v1/users/login`,
+        `${API_BASE_URL}users/login`,
         values
       );
       dispatch(logInSuccess(res.data.data.user));

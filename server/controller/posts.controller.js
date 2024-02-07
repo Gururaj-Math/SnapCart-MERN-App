@@ -86,23 +86,31 @@ const getSavedPosts = asyncHandler(async (req, resp) => {
 
 // function to get user's posts
 const getUserPosts = asyncHandler(async (req, resp) => {
-  const user = await User.findById(req.params.userId);
-
-  if (!user) {
-    throw new ApiError(400, `User not found`);
+  const userId = req.params.userId; 
+  
+  if (!userId) {
+    throw new ApiError(400, `User ID not found`);
   }
 
   try {
-    const userPosts = await Posts.find({ userOwner: user._id });
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new ApiError(404, `User not found`);
+    }
+
+    const userPosts = await Posts.find({ userOwner: userId });
+    
     return resp
       .status(200)
       .json(
         new ApiResponse(200, userPosts, `User's posts fetched successfully`)
       );
   } catch (error) {
-    throw new ApiError(400, `User not found: ${error}`);
+    throw new ApiError(400, `Error retrieving user's posts: ${error}`);
   }
 });
+
 
 // function to delete user's post
 const deleteUserPosts = asyncHandler(async (req, resp) => {
