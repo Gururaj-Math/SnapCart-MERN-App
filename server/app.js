@@ -11,8 +11,9 @@ app.use(express.static("public"));
 
 // routes
 import userRoute from "./routes/user.route.js";
+import postsRoute from "./routes/posts.route.js"
 
 app.use("/api/v1/users/", userRoute);
-
+app.use("/api/v1/posts/", postsRoute);
 
 export { app }

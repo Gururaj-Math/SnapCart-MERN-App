@@ -18,13 +18,11 @@ const PostsSchema = new Schema(
     },
 
     likes: {
-      type: number,
-      required: true,
+      type: Number,
     },
 
     comments: {
       type: [String],
-      required: true,
     },
 
     tags: {
@@ -34,10 +32,11 @@ const PostsSchema = new Schema(
 
     userOwner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+      ref: 'User',
+      required: true
+    }    
   },
   { timestamps: true }
 );
 
-export const Posts = mongoose.model("Recipe", PostsSchema);
+export const Posts = mongoose.model("Post", PostsSchema);

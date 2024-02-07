@@ -9,6 +9,7 @@ import {
   logInFailure,
 } from "../../../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import API_BASE_URL from "../../../constant";
 
 const Login = () => {
   const [_, setCookie] = useCookies(["access_token"]);
@@ -20,7 +21,7 @@ const Login = () => {
     try {
       dispatch(logInStart());
       const res = await axios.post(
-        "http://localhost:3000/api/v1/users/login",
+        `${API_BASE_URL}/api/v1/users/login`,
         values
       );
       dispatch(logInSuccess(res.data.data.user));
