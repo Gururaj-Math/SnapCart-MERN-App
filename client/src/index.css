@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,4 +8,57 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+  }
+
+:root {
+    --primary-color: #000000;
+    --second-color: #253238;
+    --white-color: #ffffff;
+    --black-color: #000000;
+}
+
+.ant-layout-sider-children{
+    background-color: var(--primary-color);
+}
+
+.ant-menu-item-selected{
+    background-color: var(--white-color) !important;
+    color: #000000 !important;
+}
+
+.ant-menu{
+    background-color: var(--primary-color);
+}
+
+.ant-btn-primary {
+    border-color: var(--primary-color);
+    color: var(--white-color);
+    background-color: var(--primary-color);
+}
+
+.ant-btn:hover,
+.ant-btn:focus {
+    background-color: var(--primary-color) !important;
+    color: var(--white-color) !important;
+}
+
+.ant-input:focus,
+.ant-input-affix-wrapper:focus {
+    border-color: var(--primary-color);
+}
+
+.ant-input:hover,
+.ant-input-affix-wrapper:hover {
+    border-color: var(--primary-color);
+    /* Set your desired hover color */
+}
+
+.ant-tag.ant-tag-blue {
+    color: var(--white-color);
+    background: transparent !important;
+    border-color: var(--primary-color) !important;
 }

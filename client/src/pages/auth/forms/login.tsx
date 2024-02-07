@@ -8,7 +8,7 @@ import {
   logInSuccess,
   logInFailure,
 } from "../../../redux/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import API_BASE_URL from "../../../constant";
 
 const Login = () => {
