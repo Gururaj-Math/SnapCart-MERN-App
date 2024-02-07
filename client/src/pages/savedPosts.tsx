@@ -1,10 +1,5 @@
-
 const savedPosts = () => {
-  return (
-    <div>
-        saved
-    </div>
-  )
-}
+   return <div>saved</div>;
+};
 
-export default savedPosts
+export default savedPosts;
