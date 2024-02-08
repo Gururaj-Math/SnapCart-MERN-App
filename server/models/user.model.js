@@ -53,11 +53,9 @@ const userSchema = new Schema(
       type: String,
     },
 
-    links: [
-      {
-        type: [String],
-      },
-    ],
+    links: {
+      type: [String],
+    },
     location: {
       type: String,
     },

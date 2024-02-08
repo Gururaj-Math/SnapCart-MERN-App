@@ -86,7 +86,7 @@ const loginUser = asyncHandler(async (req, res) => {
   });
   
   const updateUserDetails = asyncHandler(async (req, res) => {
-    const userId = req.user._id; 
+    const userId = req.params.userId;  
     const { avatar, coverImage, bio, links, location } = req.body;
   
     let user = await User.findById(userId);
@@ -97,7 +97,15 @@ const loginUser = asyncHandler(async (req, res) => {
     if (avatar) user.avatar = avatar;
     if (coverImage) user.coverImage = coverImage;
     if (bio) user.bio = bio;
-    if (links) user.links = links;
+  
+    if (links) {
+      if (links.length > 3) {
+        throw new ApiError(400, "Maximum 3 links allowed");
+      } else {
+        user.links = links;
+      }
+    }
+  
     if (location) user.location = location; 
   
     user = await user.save();
@@ -107,4 +115,6 @@ const loginUser = asyncHandler(async (req, res) => {
     );
   });
   
+  
+
 export { registerUser, loginUser, updateUserDetails };

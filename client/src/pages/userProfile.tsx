@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { EditOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from 'antd/es/card/Card';
 import axios from 'axios';
 import API_BASE_URL from '../constant';
@@ -19,6 +19,7 @@ const UserProfile: React.FC = () => {
          try {
             const res = await axios.get(`${API_BASE_URL}posts/user/${userId}`);
             setUserPosts(res.data.data);
+            
          } catch (err) {
             console.error(err);
          }
@@ -78,7 +79,7 @@ const UserProfile: React.FC = () => {
                      <h1 className="font-semibold text-gray-500">
                         Social Links
                      </h1>
-                     <div className="flex flex-col gap-2">
+                    <div className='flex flex-col'>
                         {currentUser.links.map(
                            (link: string, index: number) => (
                               <a
@@ -91,7 +92,7 @@ const UserProfile: React.FC = () => {
                               </a>
                            ),
                         )}
-                     </div>
+                   </div>
                   </div>
                </div>
                <div className="flex w-full gap-4 flex-wrap justify-evenly max-h-[200px] overflow-auto">

@@ -5,6 +5,6 @@ const router = Router()
 
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
-router.route("/update/:id").put(updateUserDetails);
+router.route("/update/:userId").put(updateUserDetails);
 
 export default router
