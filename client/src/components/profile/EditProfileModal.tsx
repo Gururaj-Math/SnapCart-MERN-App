@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import { Button, Modal } from 'antd';
+import { useState } from 'react';
+import { EditOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import API_BASE_URL from '../constant';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from '../redux/user/userSlice';
-import { message } from 'antd';
-import EditProfileForm from '../components/profile/EditProfileForm';
 
-const EditProfile: React.FC = () => {
+import { useDispatch, useSelector } from 'react-redux';
+
+import { message } from 'antd';
+import API_BASE_URL from '../../constant';
+import { updateUserProfile } from '../../redux/user/userSlice';
+import EditProfileForm from './EditProfileForm';
+
+const EditProfileModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { currentUser } = useSelector((state: any) => state.user);
   const [avatarUrl, setAvatarUrl] = useState<string>();
   const [coverImageUrl, setCoverImageUrl] = useState<string>('');
@@ -41,6 +46,7 @@ const EditProfile: React.FC = () => {
 
       message.success('User profile updated successfully');
       dispatch(updateUserProfile(newUserData));
+      setIsModalOpen(false);
     } catch (error) {
       console.error('Error updating user details:', error);
       message.error('Error updating user details');
@@ -52,18 +58,26 @@ const EditProfile: React.FC = () => {
     initialLinkValues[`link${index + 1}`] = link;
   });
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
-    <div className="flex justify-center items-center w-full h-full">
-      <EditProfileForm
-        formItemLayout={formItemLayout}
-        onFinish={onFinish}
-        currentUser={currentUser}
-        initialLinkValues={initialLinkValues}
-        setAvatarUrl={setAvatarUrl}
-        setCoverImageUrl={setCoverImageUrl}
-      />
-    </div>
+    <>
+      <EditOutlined onClick={showModal} />
+
+      <Modal title="Edit Profile" visible={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
+        <EditProfileForm
+          formItemLayout={formItemLayout}
+          onFinish={onFinish}
+          currentUser={currentUser}
+          initialLinkValues={initialLinkValues}
+          setAvatarUrl={setAvatarUrl}
+          setCoverImageUrl={setCoverImageUrl}
+        />
+      </Modal>
+    </>
   );
 };
 
-export default EditProfile;
+export default EditProfileModal;

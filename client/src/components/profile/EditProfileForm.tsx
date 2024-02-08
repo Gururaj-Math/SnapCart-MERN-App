@@ -35,15 +35,15 @@ const EditProfileForm = (props: {
       }}
       style={{ maxWidth: 600 }}
       scrollToFirstError
-      className="bg-white p-4 rounded-md w-[30vw] flex flex-col items-center justify-center gap-4"
+      className="bg-white p-4 rounded-md flex flex-col items-center justify-center gap-4"
     >
       <h1 className="text-xl font-semibold text-center p-4">Edit User Profile</h1>
 
-      <div className='w-[400px]'>
+      <div className="w-[400px]">
         <UploadWidget buttonName="Upload New Avatar" onUpload={updateAvatarUrl} />
       </div>
 
-      <div className='w-[400px]'>
+      <div className="w-[400px]">
         <UploadWidget buttonName="Upload New Cover Image" onUpload={updateCoverImageUrl} />
       </div>
 
@@ -66,16 +66,9 @@ const EditProfileForm = (props: {
         </Form.Item>
       ))}
 
-      <div className="flex gap-4 justify-center items-center">
-        <Link to="/profile">
-          <Button type="primary" className="w-[100px]">
-            Back
-          </Button>
-        </Link>
-        <Button type="primary" htmlType="submit" className="w-[100px]">
-          Save
-        </Button>
-      </div>
+      <Button type="primary" htmlType="submit" className="w-[100px]">
+        Save
+      </Button>
     </Form>
   );
 };
