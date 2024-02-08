@@ -1,15 +1,27 @@
 import { Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
+import UploadWidget from '../UploadWidget';
 
 const EditProfileForm = (props: {
   formItemLayout: any;
   onFinish: (values: any) => Promise<void>;
   currentUser: any;
+  setAvatarUrl: any;
+  setCoverImageUrl: any;
   initialLinkValues: {
     [key: string]: string;
   };
 }) => {
   const [form] = Form.useForm();
+
+  const updateAvatarUrl = (result: any) => {
+    props.setAvatarUrl(result.secure_url);
+  };
+
+  const updateCoverImageUrl = (result: any) => {
+    props.setCoverImageUrl(result.secure_url);
+  };
+
   return (
     <Form
       {...props.formItemLayout}
@@ -26,23 +38,10 @@ const EditProfileForm = (props: {
       className="bg-white p-4 rounded-md w-[30vw] flex flex-col items-center justify-center gap-4"
     >
       <h1 className="text-xl font-semibold text-center p-4">Edit User Profile</h1>
-      <Form.Item
-        name="avatar"
-        label="Avatar"
-        rules={[{ required: true, message: 'Please input avatar!' }]}
-        className="mb-4 w-full"
-      >
-        <Input />
-      </Form.Item>
 
-      <Form.Item
-        name="coverImage"
-        label="Cover Image"
-        rules={[{ required: true, message: 'Please input cover image!' }]}
-        className="mb-4 w-full"
-      >
-        <Input />
-      </Form.Item>
+      <UploadWidget buttonName="Upload New Avatar" onUpload={updateAvatarUrl} />
+
+      <UploadWidget buttonName="Upload New Cover Image" onUpload={updateCoverImageUrl} />
 
       <Form.Item
         name="bio"

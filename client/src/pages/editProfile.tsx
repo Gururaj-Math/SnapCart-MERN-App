@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../constant';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,8 @@ import EditProfileForm from '../components/profile/EditProfileForm';
 
 const EditProfile: React.FC = () => {
   const { currentUser } = useSelector((state: any) => state.user);
+  const [avatarUrl, setAvatarUrl] = useState<string>();
+  const [coverImageUrl, setCoverImageUrl] = useState<string>('');
   const userId = currentUser._id;
 
   const dispatch = useDispatch();
@@ -19,11 +21,24 @@ const EditProfile: React.FC = () => {
 
   const onFinish = async (values: any) => {
     try {
-      await axios.put(`${API_BASE_URL}users/update/${userId}`, {
+      const requestBody: any = {
         links: [values.link1, values.link2, values.link3],
         ...values,
-      });
-      const newUserData = { ...currentUser, links: [values.link1, values.link2, values.link3], ...values };
+      };
+
+      if (avatarUrl) requestBody.avatar = avatarUrl;
+      if (coverImageUrl) requestBody.coverImage = coverImageUrl;
+
+      await axios.put(`${API_BASE_URL}users/update/${userId}`, requestBody);
+
+      const newUserData = {
+        ...currentUser,
+        links: [values.link1, values.link2, values.link3],
+        ...values,
+        ...(avatarUrl && { avatar: avatarUrl }),
+        ...(coverImageUrl && { coverImage: coverImageUrl }),
+      };
+
       message.success('User profile updated successfully');
       dispatch(updateUserProfile(newUserData));
     } catch (error) {
@@ -44,6 +59,8 @@ const EditProfile: React.FC = () => {
         onFinish={onFinish}
         currentUser={currentUser}
         initialLinkValues={initialLinkValues}
+        setAvatarUrl={setAvatarUrl}
+        setCoverImageUrl={setCoverImageUrl}
       />
     </div>
   );
