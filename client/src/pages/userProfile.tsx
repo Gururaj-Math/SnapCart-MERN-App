@@ -37,7 +37,11 @@ const UserProfile: React.FC = () => {
                   className="h-[120px] w-[600px] object-cover"
                />
             }
-            actions={[<Link to={`/profile/${currentUser._id}`}><EditOutlined key="edit"/></Link>]}
+            actions={[
+               <Link to={`/profile/${currentUser._id}`}>
+                  <EditOutlined key="edit" />
+               </Link>,
+            ]}
          >
             <div className="flex flex-col gap-4">
                <Meta
