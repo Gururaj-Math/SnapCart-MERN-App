@@ -3,7 +3,7 @@ import { BookOutlined, HomeOutlined, LogoutOutlined, SearchOutlined, UserOutline
 import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 
-const { Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 interface SidebarProps {
   children: ReactNode;

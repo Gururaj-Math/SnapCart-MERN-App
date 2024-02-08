@@ -1,5 +1,4 @@
 import { Button, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';
 import UploadWidget from '../UploadWidget';
 
 const EditProfileForm = (props: {
@@ -37,7 +36,6 @@ const EditProfileForm = (props: {
       scrollToFirstError
       className="bg-white p-4 rounded-md flex flex-col items-center justify-center gap-4"
     >
-      <h1 className="text-xl font-semibold text-center p-4">Edit User Profile</h1>
 
       <div className="w-[400px]">
         <UploadWidget buttonName="Upload New Avatar" onUpload={updateAvatarUrl} />

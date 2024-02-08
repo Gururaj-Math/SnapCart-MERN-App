@@ -1,5 +1,5 @@
 import { Avatar } from 'antd';
-import { Card, Space } from 'antd';
+import { Card } from 'antd';
 import {
   FacebookOutlined,
   TwitterOutlined,
