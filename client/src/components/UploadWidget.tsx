@@ -24,9 +24,9 @@ const UploadWidget = (props: { buttonName: string; onUpload: (result: any) => vo
   }, []);
 
   return (
-    <div>
+    <div className="w-full">
       {/* @ts-ignore */}
-      <Button onClick={() => widgetRef.current.open()}>{props.buttonName}</Button>
+      <Button onClick={() => widgetRef.current.open()} className="w-full">{props.buttonName}</Button>
     </div>
   );
 };

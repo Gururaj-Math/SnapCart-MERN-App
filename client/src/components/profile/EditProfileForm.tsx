@@ -39,9 +39,13 @@ const EditProfileForm = (props: {
     >
       <h1 className="text-xl font-semibold text-center p-4">Edit User Profile</h1>
 
-      <UploadWidget buttonName="Upload New Avatar" onUpload={updateAvatarUrl} />
+      <div className='w-[400px]'>
+        <UploadWidget buttonName="Upload New Avatar" onUpload={updateAvatarUrl} />
+      </div>
 
-      <UploadWidget buttonName="Upload New Cover Image" onUpload={updateCoverImageUrl} />
+      <div className='w-[400px]'>
+        <UploadWidget buttonName="Upload New Cover Image" onUpload={updateCoverImageUrl} />
+      </div>
 
       <Form.Item
         name="bio"
