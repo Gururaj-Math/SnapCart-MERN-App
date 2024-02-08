@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar';
 import './index.css';
 import userProfile from './pages/userProfile';
 import savedPosts from './pages/savedPosts';
+import editProfile from './pages/editProfile';
 
 function App() {
    return (
@@ -14,6 +15,7 @@ function App() {
             <Routes>
                <Route path="/" Component={home} />
                <Route path="/profile" Component={userProfile} />
+               <Route path="/profile/:id" Component={editProfile} />
                <Route path="/saved-posts" Component={savedPosts} />
                <Route path="/search" Component={home} />
                <Route path="auth/login" Component={login} />

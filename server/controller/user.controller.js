@@ -85,5 +85,26 @@ const loginUser = asyncHandler(async (req, res) => {
     );
   });
   
-
-export { registerUser, loginUser };
+  const updateUserDetails = asyncHandler(async (req, res) => {
+    const userId = req.user._id; 
+    const { avatar, coverImage, bio, links, location } = req.body;
+  
+    let user = await User.findById(userId);
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+  
+    if (avatar) user.avatar = avatar;
+    if (coverImage) user.coverImage = coverImage;
+    if (bio) user.bio = bio;
+    if (links) user.links = links;
+    if (location) user.location = location; 
+  
+    user = await user.save();
+  
+    return res.status(200).json(
+      new ApiResponse(200, user, "User details updated successfully")
+    );
+  });
+  
+export { registerUser, loginUser, updateUserDetails };

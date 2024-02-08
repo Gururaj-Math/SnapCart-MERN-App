@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 const userSchema = new Schema(
   {
@@ -31,9 +31,8 @@ const userSchema = new Schema(
 
     refreshToken: {
       type: String,
-      unique: true 
+      unique: true,
     },
-    
 
     followers: {
       type: Number,
@@ -49,6 +48,19 @@ const userSchema = new Schema(
         ref: "Posts",
       },
     ],
+
+    bio: {
+      type: String,
+    },
+
+    links: [
+      {
+        type: [String],
+      },
+    ],
+    location: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
@@ -62,21 +74,24 @@ userSchema.pre("save", async function (next) {
 });
 
 // function to check if password is correct.
-userSchema.methods.isPasswordCorrect = async function(password) {
-    return await bcrypt.compare(password, this.password)
-}
+userSchema.methods.isPasswordCorrect = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 // function to generate access token
-userSchema.methods.generateAccessToken = async function() {
-  return jwt.sign({
-          _id: this.id,
-          email: this.email,
-          username: this.username,
-      },
-      process.env.ACCESS_TOKEN_SECRET, {
-          expiresIn: process.env.ACCESS_TOKEN_EXPIRY
-      })
-}
+userSchema.methods.generateAccessToken = async function () {
+  return jwt.sign(
+    {
+      _id: this.id,
+      email: this.email,
+      username: this.username,
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+    }
+  );
+};
 
 // function to generate refresh token
 userSchema.methods.generateRefreshToken = async function () {
