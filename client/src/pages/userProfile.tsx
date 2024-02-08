@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { EditOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Card from 'antd/es/card/Card';
 import axios from 'axios';
 import API_BASE_URL from '../constant';
