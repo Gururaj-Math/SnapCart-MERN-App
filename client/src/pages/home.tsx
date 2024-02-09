@@ -1,14 +1,17 @@
 import axios from 'axios';
 import { Key, useEffect, useState } from 'react';
 import API_BASE_URL from '../constant';
-import { BookOutlined, EllipsisOutlined, HeartOutlined, HeartFilled, BookFilled } from '@ant-design/icons';
+import { BookOutlined, HeartOutlined, HeartFilled, BookFilled, ShareAltOutlined } from '@ant-design/icons';
 import { Avatar, message, Divider, Space, Tag, Card } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../redux/user/userSlice';
+import ShareProfileModal from '../components/posts/ShareProfileModal';
 const { Meta } = Card;
 
 const Home = () => {
   const [allPosts, setAllPosts] = useState<any[]>([]);
+  const [shareModalVisible, setShareModalVisible] = useState<boolean>(false);
+  const [selectedPostId, setSelectedPostId] = useState<string>('');
   const { currentUser } = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
 
@@ -83,7 +86,7 @@ const Home = () => {
   const handleSavePost = async (postId: string) => {
     try {
       const res = await axios.post(`${API_BASE_URL}posts/save`, { userID: currentUser._id, postID: postId });
-      console.log("res", res.data)
+      console.log('res', res.data);
       message.success('Post saved successfully');
       const updatedCurrentUser = await updateUser(currentUser._id);
       dispatch(updateUserProfile(updatedCurrentUser));
@@ -103,6 +106,11 @@ const Home = () => {
       console.error('Error removing saved post:', error);
       message.error('Error removing saved post');
     }
+  };
+
+  const handleSharePost = (postId: string) => {
+    setSelectedPostId(postId);
+    setShareModalVisible(true);
   };
 
   const updateUser = async (userId: string) => {
@@ -150,7 +158,6 @@ const Home = () => {
                 <p>{post.likes} Likes</p>
               </div>
             ),
-
             currentUser.savedPosts.includes(post._id) ? (
               <div>
                 <BookFilled key="save" onClick={() => handleRemoveSavedPost(post._id)} />
@@ -162,8 +169,10 @@ const Home = () => {
                 <p>Save Post</p>
               </div>
             ),
-
-            <EllipsisOutlined key="ellipsis" />,
+            <div>
+              <ShareAltOutlined key="share" onClick={() => handleSharePost(post._id)} />
+              <p>Share</p>
+            </div>,
           ]}
         >
           <Meta
@@ -185,6 +194,12 @@ const Home = () => {
           </div>
         </Card>
       ))}
+
+      <ShareProfileModal
+        shareModalVisible={shareModalVisible}
+        setShareModalVisible={setShareModalVisible}
+        selectedPostId={selectedPostId}
+      />
     </div>
   );
 };

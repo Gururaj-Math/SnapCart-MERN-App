@@ -2,12 +2,15 @@ import axios from 'axios';
 import { Key, useEffect, useState } from 'react';
 import API_BASE_URL from '../constant';
 import { useDispatch, useSelector } from 'react-redux';
-import { BookOutlined, EllipsisOutlined, HeartOutlined, HeartFilled, BookFilled } from '@ant-design/icons';
+import { BookOutlined, ShareAltOutlined, HeartOutlined, HeartFilled, BookFilled } from '@ant-design/icons';
 import { Avatar, message, Space, Tag, Card } from 'antd';
 import { updateUserProfile } from '../redux/user/userSlice';
+import ShareProfileModal from '../components/posts/ShareProfileModal';
 
 const SavedPosts = () => {
   const [allSavedPosts, setAllSavedPosts] = useState<any[]>([]);
+  const [shareModalVisible, setShareModalVisible] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState('');
   const { currentUser } = useSelector((state: any) => state.user);
   const { Meta } = Card;
   const dispatch = useDispatch();
@@ -116,19 +119,17 @@ const SavedPosts = () => {
     }
   };
 
+  const handleShare = (postId: string) => {
+    setSelectedPostId(postId);
+    setShareModalVisible(true);
+  };
+
   const getRandomColor = () => {
     const colors = [
       'magenta',
       'red',
       'volcano',
       'orange',
-      'gold',
-      'lime',
-      'green',
-      'cyan',
-      'blue',
-      'geekblue',
-      'purple',
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   };
@@ -163,8 +164,10 @@ const SavedPosts = () => {
                 <p>Save Post</p>
               </div>
             ),
-
-            <EllipsisOutlined key="ellipsis" />,
+            <div>
+            <ShareAltOutlined key="share" onClick={() => handleShare(post._id)} />
+            <p>Share</p>
+          </div>,
           ]}
         >
           <Meta
@@ -186,6 +189,11 @@ const SavedPosts = () => {
           </div>
         </Card>
       ))}
+       <ShareProfileModal
+        shareModalVisible={shareModalVisible}
+        setShareModalVisible={setShareModalVisible}
+        selectedPostId={selectedPostId}    
+      />
     </div>
   );
 };
