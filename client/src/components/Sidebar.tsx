@@ -4,6 +4,7 @@ import { Layout, Menu } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { message } from 'antd';
+import NotesBoard from './NotesBoard';
 
 const { Content, Sider } = Layout;
 
@@ -58,6 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   return (
     <Layout hasSider>
       <Sider
+        width={250}
         style={{
           overflow: 'auto',
           height: '100vh',
@@ -82,7 +84,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </Menu>
       </Sider>
       <Layout style={{ marginLeft: 200 }}>
-        <Content style={{ overflow: 'initial', minHeight: '100vh' }}>{children}</Content>
+        <div className='flex justify-around realtive'>
+        <Content style={{ minHeight: '100vh', marginRight: 300, }}>{children}</Content>
+        <NotesBoard />
+        </div>
       </Layout>
     </Layout>
   );

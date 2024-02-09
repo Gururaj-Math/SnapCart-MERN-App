@@ -183,7 +183,6 @@ const Home = () => {
           <div className="p-2 flex flex-col gap-4">
             <img alt="post cover" src={post.image} className="w-full h-full object-cover rounded-md" />
             <p>{post.description}</p>
-            <Divider orientation="left">Tags</Divider>
             <Space size={[0, 8]} wrap>
               {post.tags.map((tag: string, index: Key) => (
                 <span key={index}>
