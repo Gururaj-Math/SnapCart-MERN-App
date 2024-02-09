@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Key, useEffect, useState } from 'react';
 import API_BASE_URL from '../constant';
-import { EditOutlined, EllipsisOutlined, HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { BookOutlined, EllipsisOutlined, HeartOutlined, HeartFilled, BookFilled } from '@ant-design/icons';
 import { Avatar, message, Divider, Space, Tag, Card } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../redux/user/userSlice';
@@ -80,6 +80,41 @@ const Home = () => {
     }
   };
 
+  const handleSavePost = async (postId: string) => {
+    try {
+      const res = await axios.post(`${API_BASE_URL}posts/save`, { userID: currentUser._id, postID: postId });
+      console.log("res", res.data)
+      message.success('Post saved successfully');
+      const updatedCurrentUser = await updateUser(currentUser._id);
+      dispatch(updateUserProfile(updatedCurrentUser));
+    } catch (error) {
+      console.error('Error saving post:', error);
+      message.error('Error saving post');
+    }
+  };
+
+  const handleRemoveSavedPost = async (postId: string) => {
+    try {
+      await axios.delete(`${API_BASE_URL}posts/remove/saved/${currentUser._id}/${postId}`);
+      message.success('Post removed from saved');
+      const updatedCurrentUser = await updateUser(currentUser._id);
+      dispatch(updateUserProfile(updatedCurrentUser));
+    } catch (error) {
+      console.error('Error removing saved post:', error);
+      message.error('Error removing saved post');
+    }
+  };
+
+  const updateUser = async (userId: string) => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}users/${userId}`);
+      return res.data.data;
+    } catch (error) {
+      console.error('Error updating user profile:', error);
+      return currentUser;
+    }
+  };
+
   const getRandomColor = () => {
     const colors = [
       'magenta',
@@ -115,7 +150,19 @@ const Home = () => {
                 <p>{post.likes} Likes</p>
               </div>
             ),
-            <EditOutlined key="edit" />,
+
+            currentUser.savedPosts.includes(post._id) ? (
+              <div>
+                <BookFilled key="save" onClick={() => handleRemoveSavedPost(post._id)} />
+                <p>Remove From Saved</p>
+              </div>
+            ) : (
+              <div>
+                <BookOutlined key="unsave" onClick={() => handleSavePost(post._id)} />
+                <p>Save Post</p>
+              </div>
+            ),
+
             <EllipsisOutlined key="ellipsis" />,
           ]}
         >
