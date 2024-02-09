@@ -1,7 +1,9 @@
 import React, { ReactNode } from 'react';
 import { BookOutlined, HomeOutlined, LogoutOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { message } from 'antd';
 
 const { Content, Sider } = Layout;
 
@@ -43,6 +45,16 @@ const items = [
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+  const [_, setCookies] = useCookies(['access_token']);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    setCookies('access_token', '');
+    window.localStorage.clear();
+    message.success('Logout Successful');
+    navigate('/auth/login');
+  };
+
   return (
     <Layout hasSider>
       <Sider
@@ -53,13 +65,18 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
           left: 0,
           top: 0,
           bottom: 0,
+          padding: 10,
         }}
       >
         <div className="demo-logo-vertical text-white text-center text-2xl p-4">SnapCart</div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
           {items.map((item) => (
             <Menu.Item key={item.key} icon={item.icon}>
-              <Link to={item.path}>{item.label}</Link>
+              {item.path === '/auth/login' ? (
+                <a onClick={logout}>{item.label}</a>
+              ) : (
+                <Link to={item.path}>{item.label}</Link>
+              )}
             </Menu.Item>
           ))}
         </Menu>

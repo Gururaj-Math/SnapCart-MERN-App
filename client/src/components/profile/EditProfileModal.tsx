@@ -66,7 +66,7 @@ const EditProfileModal = () => {
     <>
       <EditOutlined onClick={showModal} />
 
-      <Modal title="Edit Profile" visible={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
+      <Modal title="Edit Profile" open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
         <EditProfileForm
           formItemLayout={formItemLayout}
           onFinish={onFinish}

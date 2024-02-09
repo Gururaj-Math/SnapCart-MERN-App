@@ -63,7 +63,7 @@ const UserDetails = (props: { currentUser: any; userPosts: String[] }) => {
             </span>
             Bio
           </h1>
-          <p className='mb-2'>{props.currentUser.bio}</p>
+          <p className="mb-2">{props.currentUser.bio}</p>
           <h1 className="font-semibold text-gray-500 flex items-center gap-2">
             <span>
               <EnvironmentOutlined />

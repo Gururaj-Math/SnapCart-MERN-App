@@ -17,6 +17,9 @@
   --white-color: #ffffff;
   --black-color: #000000;
 }
+.ant-layout .ant-layout-sider {
+  background-color: var(--primary-color);
+}
 
 .ant-layout-sider-children {
   background-color: var(--primary-color);
