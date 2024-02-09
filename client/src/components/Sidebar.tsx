@@ -59,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   return (
     <Layout hasSider>
       <Sider
-        width={250}
+        width={300}
         style={{
           overflow: 'auto',
           height: '100vh',

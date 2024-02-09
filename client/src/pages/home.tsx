@@ -2,10 +2,11 @@ import axios from 'axios';
 import { Key, useEffect, useState } from 'react';
 import API_BASE_URL from '../constant';
 import { BookOutlined, HeartOutlined, HeartFilled, BookFilled, ShareAltOutlined } from '@ant-design/icons';
-import { Avatar, message, Divider, Space, Tag, Card } from 'antd';
+import { Avatar, message, Space, Tag, Card } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../redux/user/userSlice';
 import ShareProfileModal from '../components/posts/ShareProfileModal';
+import CreatePost from '../components/posts/CreatePost';
 const { Meta } = Card;
 
 const Home = () => {
@@ -142,6 +143,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col justify-center items-center overflow-y-auto gap-4 p-2">
+      <CreatePost />
       {allPosts.map((post: any, key) => (
         <Card
           key={key}
