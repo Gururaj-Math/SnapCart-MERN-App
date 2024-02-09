@@ -115,6 +115,20 @@ const loginUser = asyncHandler(async (req, res) => {
     );
   });
   
+  // function to get user details by id
+  const getUserDetails = asyncHandler(async (req, res) => {
+    const userId = req.params.userId;
+  
+    try {
+      const user = await User.findById(userId).select("-password -refreshToken");
+      if (!user) {
+        throw new ApiError(404, "User not found");
+      }
+      return res.status(200).json(new ApiResponse(200, user, "User details fetched successfully"));
+    } catch (error) {
+      throw new ApiError(500, `Error fetching user details: ${error.message}`);
+    }
+  });
   
 
-export { registerUser, loginUser, updateUserDetails };
+export { registerUser, loginUser, updateUserDetails, getUserDetails};

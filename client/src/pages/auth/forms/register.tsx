@@ -1,7 +1,7 @@
 import axios from 'axios';
 import API_BASE_URL from '../../../constant';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
 
@@ -9,6 +9,7 @@ const Register = () => {
   const onFinish = async (values: string[]) => {
     try {
       await axios.post(`${API_BASE_URL}users/register`, values);
+      message.success('Registration successful');
       console.log('Registration successful');
     } catch (error) {
       console.error('Registration failed:', error);

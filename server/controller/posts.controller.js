@@ -35,7 +35,7 @@ const createPost = asyncHandler(async (req, resp) => {
 const savePost = asyncHandler(async (req, resp) => {
   const post = await Posts.findById(req.body.postID);
   const user = await User.findById(req.body.userID);
-  
+
   try {
     if (!user) {
       throw new ApiError(404, `User not found`);
@@ -86,8 +86,8 @@ const getSavedPosts = asyncHandler(async (req, resp) => {
 
 // function to get user's posts
 const getUserPosts = asyncHandler(async (req, resp) => {
-  const userId = req.params.userId; 
-  
+  const userId = req.params.userId;
+
   if (!userId) {
     throw new ApiError(400, `User ID not found`);
   }
@@ -100,7 +100,7 @@ const getUserPosts = asyncHandler(async (req, resp) => {
     }
 
     const userPosts = await Posts.find({ userOwner: userId });
-    
+
     return resp
       .status(200)
       .json(
@@ -110,7 +110,6 @@ const getUserPosts = asyncHandler(async (req, resp) => {
     throw new ApiError(400, `Error retrieving user's posts: ${error}`);
   }
 });
-
 
 // function to delete user's post
 const deleteUserPosts = asyncHandler(async (req, resp) => {
@@ -199,6 +198,68 @@ const getPostById = asyncHandler(async (req, resp) => {
     .json(new ApiResponse(200, post, "Post fetched successfully"));
 });
 
+const likePost = asyncHandler(async (req, resp) => {
+  const postId = req.params.postId;
+  const userId = req.body.userId;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new ApiError(404, `User not found`);
+    }
+
+    const post = await Posts.findById(postId);
+    if (!post) {
+      throw new ApiError(404, `Post not found`);
+    }
+
+    if (user.likedPosts.includes(postId)) {
+      throw new ApiError(400, `You have already liked this post`);
+    }
+
+    user.likedPosts.push(postId);
+    await user.save();
+
+    post.likes += 1;
+    await post.save();
+
+    resp.status(200).json(new ApiResponse(200, `Post liked successfully`));
+  } catch (err) {
+    throw new ApiError(400, `Couldn't like post: ${err}`);
+  }
+});
+
+const unlikePost = asyncHandler(async (req, resp) => {
+  const postId = req.params.postId;
+  const userId = req.body.userId;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new ApiError(404, `User not found`);
+    }
+
+    const post = await Posts.findById(postId);
+    if (!post) {
+      throw new ApiError(404, `Post not found`);
+    }
+
+    if (!user.likedPosts.includes(postId)) {
+      throw new ApiError(400, `You have not liked this post`);
+    }
+
+    user.likedPosts = user.likedPosts.filter((id) => id.toString() !== postId);
+    await user.save();
+
+    post.likes -= 1;
+    await post.save();
+
+    resp.status(200).json(new ApiResponse(200, `Post unliked successfully`));
+  } catch (err) {
+    throw new ApiError(400, `Couldn't unlike post: ${err}`);
+  }
+});
+
 export {
   getAllPosts,
   createPost,
@@ -210,4 +271,6 @@ export {
   updateUserPost,
   removeSavedPost,
   getPostById,
+  likePost,
+  unlikePost,
 };

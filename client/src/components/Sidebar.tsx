@@ -82,7 +82,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </Menu>
       </Sider>
       <Layout style={{ marginLeft: 200 }}>
-        <Content style={{ overflow: 'initial', height: '100vh' }}>{children}</Content>
+        <Content style={{ overflow: 'initial', minHeight: '100vh' }}>{children}</Content>
       </Layout>
     </Layout>
   );
