@@ -71,9 +71,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             }}
          >
             <div className="demo-logo-vertical text-white text-center text-2xl p-4">SnapCart</div>
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
+            <Menu theme="dark" mode="vertical" defaultSelectedKeys={['2']}>
                {items.map((item) => (
-                  <Menu.Item key={item.key} icon={item.icon}>
+                  <Menu.Item key={item.key} icon={item.icon} style={{ margin: '20px 0' }}>
                      {item.path === '/auth/login' ? (
                         <a onClick={logout}>{item.label}</a>
                      ) : (
