@@ -29,9 +29,6 @@ const UserProfile: React.FC = () => {
         className="w-[50vw]"
         cover={<img alt="cover image" src={currentUser.coverImage} className="h-[120px] w-[600px] object-cover" />}
         actions={[
-          // <Link to={`/profile/${currentUser._id}`}>
-          //   <EditOutlined key="edit" />
-          // </Link>,
           <EditProfileModal />,
         ]}
       >

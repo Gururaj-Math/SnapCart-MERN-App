@@ -8,6 +8,8 @@ import {
   CodepenOutlined,
   GithubOutlined,
   MediumOutlined,
+  InfoCircleOutlined,
+  EnvironmentOutlined,
 } from '@ant-design/icons';
 import React from 'react';
 
@@ -55,9 +57,19 @@ const UserDetails = (props: { currentUser: any; userPosts: String[] }) => {
       </div>
       <div className="p-4 border-2 rounded-md flex justify-between px-12">
         <div>
-          <h1 className="font-semibold text-gray-500">Bio</h1>
-          <p>{props.currentUser.bio}</p>
-          <h1 className="font-semibold text-gray-500">Location</h1>
+          <h1 className="font-semibold text-gray-500 flex items-center gap-2">
+            <span>
+              <InfoCircleOutlined />
+            </span>
+            Bio
+          </h1>
+          <p className='mb-2'>{props.currentUser.bio}</p>
+          <h1 className="font-semibold text-gray-500 flex items-center gap-2">
+            <span>
+              <EnvironmentOutlined />
+            </span>
+            Location
+          </h1>
           <p>{props.currentUser.location}</p>
         </div>
         <div className="flex flex-col justify-center items-center px-4 gap-2">
