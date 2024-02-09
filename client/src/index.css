@@ -5,81 +5,81 @@
 @tailwind utilities;
 
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+   font-family: 'Poppins', sans-serif;
 }
 
 :root {
-  --primary-color: #000000;
-  --second-color: #ffffff;
-  --white-color: #ffffff;
-  --black-color: #000000;
+   --primary-color: #000000;
+   --second-color: #ffffff;
+   --white-color: #ffffff;
+   --black-color: #000000;
 }
 .ant-layout .ant-layout-sider {
-  background-color: var(--primary-color);
+   background-color: var(--primary-color);
 }
 
 .ant-layout-sider-children {
-  background-color: var(--primary-color);
+   background-color: var(--primary-color);
 }
 
 .ant-menu-item-selected {
-  background-color: var(--white-color) !important;
-  color: #000000 !important;
+   background-color: var(--white-color) !important;
+   color: #000000 !important;
 }
 
 .ant-menu {
-  background-color: var(--primary-color);
+   background-color: var(--primary-color);
 }
 
 .ant-btn-primary {
-  border-color: var(--primary-color);
-  color: var(--white-color);
-  background-color: var(--primary-color);
+   border-color: var(--primary-color);
+   color: var(--white-color);
+   background-color: var(--primary-color);
 }
 
 .ant-btn:hover,
 .ant-btn:focus {
-  background-color: var(--primary-color) !important;
-  color: var(--white-color) !important;
+   background-color: var(--primary-color) !important;
+   color: var(--white-color) !important;
 }
 
 .ant-input:focus,
 .ant-input-affix-wrapper:focus {
-  border-color: var(--primary-color);
+   border-color: var(--primary-color);
 }
 
 .ant-input:hover,
 .ant-input-affix-wrapper:hover {
-  border-color: var(--primary-color);
-  /* Set your desired hover color */
+   border-color: var(--primary-color);
+   /* Set your desired hover color */
 }
 
 .ant-tag.ant-tag-blue {
-  color: var(--white-color);
-  background: transparent !important;
-  border-color: var(--primary-color) !important;
+   color: var(--white-color);
+   background: transparent !important;
+   border-color: var(--primary-color) !important;
 }
 
 /* Scrollbar Styles */
 ::-webkit-scrollbar {
-  width: 8px;
+   width: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+   background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+   background: #888;
+   border-radius: 4px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+   background: #555;
 }

@@ -9,22 +9,22 @@ import AuthLayout from './pages/auth/authLayout';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route Component={AuthLayout}>
-          <Route path="auth/login" Component={login} />
-          <Route path="auth/register" Component={register} />
-        </Route>
-        <Route Component={PrivateRoute}>
-          <Route path="/" Component={home} />
-          <Route path="/profile" Component={userProfile} />
-          <Route path="/saved-posts" Component={savedPosts} />
-          <Route path="/search" Component={home} />
-        </Route>
-      </Routes>
-    </Router>
-  );
+   return (
+      <Router>
+         <Routes>
+            <Route Component={AuthLayout}>
+               <Route path="auth/login" Component={login} />
+               <Route path="auth/register" Component={register} />
+            </Route>
+            <Route Component={PrivateRoute}>
+               <Route path="/" Component={home} />
+               <Route path="/profile" Component={userProfile} />
+               <Route path="/saved-posts" Component={savedPosts} />
+               <Route path="/search" Component={home} />
+            </Route>
+         </Routes>
+      </Router>
+   );
 }
 
 export default App;
