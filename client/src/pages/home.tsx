@@ -1,13 +1,12 @@
 import axios from 'axios';
-import { Key, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import API_BASE_URL from '../constant';
-import { BookOutlined, HeartOutlined, HeartFilled, BookFilled, ShareAltOutlined } from '@ant-design/icons';
-import { Avatar, message, Space, Tag, Card } from 'antd';
+import {  message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../redux/user/userSlice';
 import ShareProfileModal from '../components/posts/ShareProfileModal';
 import CreatePost from '../components/posts/CreatePost';
-const { Meta } = Card;
+import PostCard from '../components/posts/PostCard';
 
 const Home = () => {
    const [allPosts, setAllPosts] = useState<any[]>([]);
@@ -124,66 +123,22 @@ const Home = () => {
       }
    };
 
-   const getRandomColor = () => {
-      const colors = ['magenta', 'red', 'volcano', 'orange', 'gold'];
-      return colors[Math.floor(Math.random() * colors.length)];
-   };
-
    return (
       <div className="flex flex-col justify-center items-center overflow-y-auto gap-4 p-2">
          <CreatePost fetchAllPosts={fetchAllPosts} />
          {allPosts.map((post: any, key) => (
-            <Card
-               key={key}
-               style={{ width: 700 }}
-               actions={[
-                  currentUser.likedPosts.includes(post._id) ? (
-                     <div>
-                        <HeartFilled key="like" onClick={() => handleUnlike(post._id)} style={{ color: 'red' }} />
-                        <p>{post.likes} Likes</p>
-                     </div>
-                  ) : (
-                     <div>
-                        <HeartOutlined key="unlike" onClick={() => handleLike(post._id)} />
-                        <p>{post.likes} Likes</p>
-                     </div>
-                  ),
-                  currentUser.savedPosts.includes(post._id) ? (
-                     <div>
-                        <BookFilled key="save" onClick={() => handleRemoveSavedPost(post._id)} />
-                        <p>Remove From Saved</p>
-                     </div>
-                  ) : (
-                     <div>
-                        <BookOutlined key="unsave" onClick={() => handleSavePost(post._id)} />
-                        <p>Save Post</p>
-                     </div>
-                  ),
-                  <div>
-                     <ShareAltOutlined key="share" onClick={() => handleSharePost(post._id)} />
-                     <p>Share</p>
-                  </div>,
-               ]}
-            >
-               <Meta
-                  avatar={<Avatar src={post.userDetails.avatar} />}
-                  title={post.userDetails.username}
-                  description={post.title}
+            <div key={key}>
+               <PostCard
+                  post={post}
+                  currentUser={currentUser}
+                  handleLike={handleLike}
+                  handleUnlike={handleUnlike}
+                  handleSavePost={handleSavePost}
+                  handleRemoveSavedPost={handleRemoveSavedPost}
+                  handleSharePost={handleSharePost}
                />
-               <div className="p-2 flex flex-col gap-4">
-                  <img alt="post cover" src={post.image} className="w-full h-full object-cover rounded-md" />
-                  <p>{post.description}</p>
-                  <Space size={[0, 8]} wrap>
-                     {post.tags.map((tag: string, index: Key) => (
-                        <span key={index}>
-                           <Tag color={getRandomColor()}>{tag}</Tag>
-                        </span>
-                     ))}
-                  </Space>
-               </div>
-            </Card>
+         </div>
          ))}
-
          <ShareProfileModal
             shareModalVisible={shareModalVisible}
             setShareModalVisible={setShareModalVisible}
