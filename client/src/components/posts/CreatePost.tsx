@@ -1,5 +1,5 @@
 import { Avatar, Card, Input, Button, theme, Tag, message, InputRef } from 'antd';
-import { PlusOutlined, CloudUploadOutlined } from '@ant-design/icons';
+import { PlusOutlined, CloudUploadOutlined, CheckOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import UploadWidget from '../UploadWidget';
@@ -100,12 +100,17 @@ const CreatePost = (props: { fetchAllPosts: () => Promise<void> }) => {
             <div>
                <CloudUploadOutlined />
                <div className="px-6">
-                  <UploadWidget buttonName="Upload Image" onUpload={updateImageUrl} />
+                  <UploadWidget buttonName="Upload Image" onUpload={updateImageUrl} class='border-0' />
                </div>
             </div>,
-            <Button className="border-0 mt-2" onClick={handleSave}>
-               Save
-            </Button>,
+            <div>
+               <CheckOutlined />
+               <div>
+                  <Button className="border-0" onClick={handleSave}>
+                     Save
+                  </Button>
+               </div>
+            </div>,
          ]}
       >
          <div className="flex justify-center items-center  ">

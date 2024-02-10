@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Button } from 'antd';
 
-const UploadWidget = (props: { buttonName: string; onUpload: (result: any) => void }) => {
+const UploadWidget = (props: { buttonName: string; onUpload: (result: any) => void, class?:string }) => {
    const cloudinaryRef = useRef();
    const widgetRef = useRef();
 
@@ -26,7 +26,7 @@ const UploadWidget = (props: { buttonName: string; onUpload: (result: any) => vo
    return (
       <div className="w-full">
          {/* @ts-ignore */}
-         <Button onClick={() => widgetRef.current.open()} className="w-full">
+         <Button onClick={() => widgetRef.current.open()} className={`w-full ${props.class}`}>
             {props.buttonName}
          </Button>
       </div>
