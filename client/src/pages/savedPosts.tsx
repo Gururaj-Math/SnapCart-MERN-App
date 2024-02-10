@@ -123,7 +123,6 @@ const SavedPosts = () => {
       setShareModalVisible(true);
    };
 
-
    return (
       <div className="flex flex-col justify-center items-center overflow-y-auto gap-4 p-2">
          {allSavedPosts.map((post: any, index) => (

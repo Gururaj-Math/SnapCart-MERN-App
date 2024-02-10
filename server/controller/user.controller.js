@@ -19,6 +19,14 @@ const generateTokens = async (userId) => {
   }
 };
 
+const getAllUsersDetails = asyncHandler(async (req, res) => {
+  try {
+    const users = await User.find().select("-password -refreshToken");
+    return res.status(200).json(new ApiResponse(200, users, "All users details fetched successfully"));
+  } catch (error) {
+    throw new ApiError(500, `Error fetching users details: ${error.message}`);
+  }
+});
 
 const registerUser = asyncHandler(async (req, resp) => {
   const { username, email, password } = req.body;
@@ -131,4 +139,4 @@ const loginUser = asyncHandler(async (req, res) => {
   });
   
 
-export { registerUser, loginUser, updateUserDetails, getUserDetails};
+export { registerUser, loginUser, updateUserDetails, getUserDetails, getAllUsersDetails};

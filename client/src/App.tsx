@@ -7,6 +7,7 @@ import userProfile from './pages/userProfile';
 import savedPosts from './pages/savedPosts';
 import AuthLayout from './pages/auth/authLayout';
 import PrivateRoute from './components/PrivateRoute';
+import SearchUsers from './pages/SearchUsers';
 
 function App() {
    return (
@@ -20,7 +21,7 @@ function App() {
                <Route path="/" Component={home} />
                <Route path="/profile" Component={userProfile} />
                <Route path="/saved-posts" Component={savedPosts} />
-               <Route path="/search" Component={home} />
+               <Route path="/search" Component={SearchUsers} />
             </Route>
          </Routes>
       </Router>

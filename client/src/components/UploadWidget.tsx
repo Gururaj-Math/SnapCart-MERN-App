@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Button } from 'antd';
 
-const UploadWidget = (props: { buttonName: string; onUpload: (result: any) => void, class?:string }) => {
+const UploadWidget = (props: { buttonName: string; onUpload: (result: any) => void; class?: string }) => {
    const cloudinaryRef = useRef();
    const widgetRef = useRef();
 

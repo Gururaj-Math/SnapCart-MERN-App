@@ -100,7 +100,7 @@ const CreatePost = (props: { fetchAllPosts: () => Promise<void> }) => {
             <div>
                <CloudUploadOutlined />
                <div className="px-6">
-                  <UploadWidget buttonName="Upload Image" onUpload={updateImageUrl} class='border-0' />
+                  <UploadWidget buttonName="Upload Image" onUpload={updateImageUrl} class="border-0" />
                </div>
             </div>,
             <div>

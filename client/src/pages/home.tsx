@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import API_BASE_URL from '../constant';
-import {  message } from 'antd';
+import { message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../redux/user/userSlice';
 import ShareProfileModal from '../components/posts/ShareProfileModal';
@@ -137,7 +137,7 @@ const Home = () => {
                   handleRemoveSavedPost={handleRemoveSavedPost}
                   handleSharePost={handleSharePost}
                />
-         </div>
+            </div>
          ))}
          <ShareProfileModal
             shareModalVisible={shareModalVisible}

@@ -6,9 +6,18 @@ import { Link } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
 
 const Register = () => {
-   const onFinish = async (values: string[]) => {
+   const onFinish = async (values: any) => {
       try {
-         await axios.post(`${API_BASE_URL}users/register`, values);
+         const userData = {
+            ...values,
+            avatar: 'https://api.dicebear.com/7.x/miniavs/svg?seed=8',
+            followers: 0,
+            following: 0,
+            bio: '',
+            links: [],
+            location: '',
+         };
+         await axios.post(`${API_BASE_URL}users/register`, userData);
          message.success('Registration successful');
          console.log('Registration successful');
       } catch (error) {
