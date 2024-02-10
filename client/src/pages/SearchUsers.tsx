@@ -3,6 +3,7 @@ import { Card, Avatar, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import API_BASE_URL from '../constant';
+import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -45,9 +46,11 @@ const SearchUsers = () => {
             />
          </div>
          {filteredUsers.map((user: any) => (
-            <Card key={user._id} className="w-[40rem]">
-               <Meta avatar={<Avatar src={user.avatar} />} title={user.username} description={user.bio} />
-            </Card>
+            <Link to={`/profile/${user._id}`}>
+               <Card key={user._id} className="w-[40rem]">
+                  <Meta avatar={<Avatar src={user.avatar} />} title={user.username} description={user.bio} />
+               </Card>
+            </Link>
          ))}
       </div>
    );
