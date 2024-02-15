@@ -1,4 +1,4 @@
-import { Avatar } from 'antd';
+import { Avatar, Modal, Tag } from 'antd';
 import { Card } from 'antd';
 import {
    FacebookOutlined,
@@ -10,8 +10,11 @@ import {
    MediumOutlined,
    InfoCircleOutlined,
    EnvironmentOutlined,
+   HeartFilled,
 } from '@ant-design/icons';
-import React from 'react';
+import React, { useState } from 'react';
+import API_BASE_URL from '../../constant';
+import axios from 'axios';
 
 const { Meta } = Card;
 
@@ -26,6 +29,20 @@ const socialMediaIcons: { [key: string]: JSX.Element } = {
 };
 
 const UserDetails = (props: { currentUser: any; userPosts: String[] }) => {
+   const [modalVisible, setModalVisible] = useState(false);
+   const [modalPostData, setModalPostData] = useState<any>(null);
+
+   const handleImageClick = async (post: any) => {
+      try {
+         const res = await axios.get(`${API_BASE_URL}posts/${post._id}`);
+         console.log(res.data.data);
+         setModalPostData(res.data.data);
+         setModalVisible(true);
+      } catch (error) {
+         console.error('Error fetching post data:', error);
+      }
+   };
+
    const renderSocialMediaIcon = (link: string) => {
       const socialMediaPlatforms: string[] = Object.keys(socialMediaIcons);
       const platform = socialMediaPlatforms.find((platform) => link.includes(platform));
@@ -87,11 +104,26 @@ const UserDetails = (props: { currentUser: any; userPosts: String[] }) => {
          </div>
          <div className="flex w-full gap-2 flex-wrap justify-evenly max-h-[200px] overflow-auto">
             {props.userPosts.map((post: any, index) => (
-               <div key={index} className="border-2 rounded-md">
+               <div key={index} className="border-2 rounded-md" onClick={() => handleImageClick(post)}>
                   <img src={post.image} className="w-[200px] h-[200px] rounded-md" />
                </div>
             ))}
          </div>
+         <Modal title="Post Details" open={modalVisible} onCancel={() => setModalVisible(false)} footer={null}>
+            {modalPostData && (
+               <div className="flex flex-col gap-2">
+                  <h2>Title: {modalPostData.title}</h2>
+                  <p>Description: {modalPostData.description}</p>
+                  <img src={modalPostData.image} className="w-full h-[300px] rounded-md" />
+                  <div>
+                     <Tag>
+                        <HeartFilled className="text-red-500" />
+                        {modalPostData.likes} Likes
+                     </Tag>
+                  </div>
+               </div>
+            )}
+         </Modal>
       </div>
    );
 };
