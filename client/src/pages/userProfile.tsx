@@ -5,7 +5,7 @@ import axios from 'axios';
 import API_BASE_URL from '../constant';
 import UserDetails from '../components/profile/UserDetails';
 import EditProfileModal from '../components/profile/EditProfileModal';
-import { Skeleton, Button } from 'antd';
+import { Skeleton, Button, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../redux/user/userSlice';
 
@@ -63,11 +63,13 @@ const UserProfile = () => {
          await axios.post(`${API_BASE_URL}users/${currentUserID}/follow`, { userId: userId });
          fetchUserById();
          setIsFollowing(true);
-
+         message.success('You have successfully followed this user.');
+         
          const updatedUser = { ...currentUser, following: [...currentUser.following, userId] };
-         dispatch(updateUserProfile(updatedUser));
+         dispatch(updateUserProfile(updatedUser)); 
       } catch (err) {
          console.error(err);
+         message.error('Failed to follow this user. Please try again later.');
       }
    };
 
@@ -77,12 +79,13 @@ const UserProfile = () => {
          await axios.post(`${API_BASE_URL}users/${currentUserID}/unfollow`, { userId: userId });
          fetchUserById();
          setIsFollowing(false);
+         message.success('You have successfully unfollowed this user.');
 
-         const updatedFollowing = currentUser.following.filter((followId: string) => followId !== userId);
-         const updatedUser = { ...currentUser, following: updatedFollowing };
-         dispatch(updateUserProfile(updatedUser));
+         const updatedUser = { ...currentUser, following: currentUser.following.filter((id: string | undefined) => id !== userId) };
+         dispatch(updateUserProfile(updatedUser)); 
       } catch (err) {
          console.error(err);
+         message.error('Failed to unfollow this user. Please try again later.');
       }
    };
 

@@ -45,8 +45,8 @@ const SearchUsers = () => {
                onChange={(e) => handleSearch(e.target.value)}
             />
          </div>
-         {filteredUsers.map((user: any) => (
-            <Link to={`/profile/${user._id}`}>
+         {filteredUsers.map((user: any, key) => (
+            <Link to={`/profile/${user._id}`} key={key}>
                <Card key={user._id} className="w-[40rem]">
                   <Meta avatar={<Avatar src={user.avatar} />} title={user.username} description={user.bio} />
                </Card>
