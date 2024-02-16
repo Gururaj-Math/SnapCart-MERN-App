@@ -5,6 +5,7 @@ import moment from 'moment';
 import { ClockCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import API_BASE_URL from '../constant';
 import { useSelector } from 'react-redux';
+import FollowedUserDetails from './FollowedUserDetails';
 
 const { Meta } = Card;
 
@@ -120,6 +121,15 @@ const NotesBoard = () => {
                      </div>
                   </Card>
                ))}
+            </div>
+            <Divider orientation="left">Following Users</Divider>
+            <div className='flex flex-col gap-2 items-center max-h-[70vw] overflow-auto'>
+               {currentUser.following &&
+                  currentUser.following.map((userId: string) => (
+                     <div key={userId}>
+                        <FollowedUserDetails userId={userId} />
+                     </div>
+                  ))}
             </div>
          </Card>
       </div>
