@@ -4,12 +4,14 @@ import { SearchOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import API_BASE_URL from '../constant';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const { Meta } = Card;
 
 const SearchUsers = () => {
    const [users, setUsers] = useState([]);
    const [searchQuery, setSearchQuery] = useState('');
+   const { currentUser } = useSelector((state: any) => state.user);
 
    useEffect(() => {
       const fetchUsers = async () => {
@@ -31,7 +33,7 @@ const SearchUsers = () => {
    const filteredUsers = users.filter((user: any) => {
       const username = user.username.toLowerCase();
       const query = searchQuery.toLowerCase();
-      return username.includes(query);
+      return username.includes(query) && user._id !== currentUser._id; // Exclude the current user
    });
 
    return (

@@ -11,13 +11,12 @@ const Register = () => {
          const userData = {
             ...values,
             avatar: 'https://api.dicebear.com/7.x/miniavs/svg?seed=8',
-            coverImage:
-               'https://images.pexels.com/photos/1111318/pexels-photo-1111318.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
             bio: '',
             links: [],
             location: '',
          };
-         await axios.post(`${API_BASE_URL}users/register`, userData);
+         const res = await axios.post(`${API_BASE_URL}users/register`, userData);
+         console.log(res)
          message.success('Registration successful');
          console.log('Registration successful');
       } catch (error) {
@@ -54,3 +53,4 @@ const Register = () => {
 };
 
 export default Register;
+
