@@ -137,6 +137,74 @@ const loginUser = asyncHandler(async (req, res) => {
       throw new ApiError(500, `Error fetching user details: ${error.message}`);
     }
   });
+
+  const followUser = asyncHandler(async (req, res) => {
+    const userId = req.params.userId;
+    const userToFollowId = req.body.userId;
+  
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+  
+    const userToFollow = await User.findById(userToFollowId);
+    if (!userToFollow) {
+      throw new ApiError(404, "User to follow not found");
+    }
+  
+    if (user.following.includes(userToFollowId)) {
+      throw new ApiError(400, "You are already following this user");
+    }
+  
+    user.following.push(userToFollowId);
+    await user.save();
+
+    userToFollow.followers.push(userId);
+    await userToFollow.save();
+  
+    return res.status(200).json(new ApiResponse(200, null, "User followed successfully"));
+  });
+  
+  const unfollowUser = asyncHandler(async (req, res) => {
+    const userId = req.params.userId;
+    const userToUnfollowId = req.body.userId;
+  
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+  
+    const userToUnfollow = await User.findById(userToUnfollowId);
+    if (!userToUnfollow) {
+      throw new ApiError(404, "User to unfollow not found");
+    }
+  
+    if (!user.following.includes(userToUnfollowId)) {
+      throw new ApiError(400, "You are not following this user");
+    }
+
+    user.following = user.following.filter(id => id.toString() !== userToUnfollowId);
+    await user.save();
+  
+    userToUnfollow.followers = userToUnfollow.followers.filter(id => id.toString() !== userId);
+    await userToUnfollow.save();
+  
+    return res.status(200).json(new ApiResponse(200, null, "User unfollowed successfully"));
+  });
+  
+  const checkIfFollowing = asyncHandler(async (req, res) => {
+    const currentUserId = req.query.userId || req.body.userId; 
+    const userToCheckId = req.params.userId;
+    
+    const user = await User.findById(currentUserId);
+    if (!user) {
+      throw new ApiError(404, 'User not found');
+    }
+    
+    const isFollowing = user.following.includes(userToCheckId);
+    res.status(200).json({ isFollowing });
+  });
   
 
-export { registerUser, loginUser, updateUserDetails, getUserDetails, getAllUsersDetails};
+
+export { registerUser, loginUser, updateUserDetails, getUserDetails, getAllUsersDetails, unfollowUser ,followUser, checkIfFollowing};

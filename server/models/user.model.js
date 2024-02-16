@@ -34,13 +34,15 @@ const userSchema = new Schema(
       unique: true,
     },
 
-    followers: {
-      type: Number,
-    },
-
-    following: {
-      type: Number,
-    },
+    followers: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }],
+    
+    following: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }],
 
     savedPosts: [
       {

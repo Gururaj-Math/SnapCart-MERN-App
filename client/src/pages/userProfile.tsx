@@ -1,32 +1,36 @@
-import  { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Card from 'antd/es/card/Card';
 import axios from 'axios';
 import API_BASE_URL from '../constant';
 import UserDetails from '../components/profile/UserDetails';
 import EditProfileModal from '../components/profile/EditProfileModal';
-import { Skeleton } from 'antd';
+import { Skeleton, Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserProfile } from '../redux/user/userSlice';
 
 const UserProfile = () => {
    const [user, setUser] = useState<any[]>([]);
    const [userPosts, setUserPosts] = useState<string[]>([]);
    const [loading, setLoading] = useState(true);
+   const [isFollowing, setIsFollowing] = useState(false);
+   const { currentUser } = useSelector((state: any) => state.user);
+   const dispatch = useDispatch();
 
    const { userId } = useParams<{ userId: string }>();
 
-   useEffect(() => {
-      const fetchUserById = async () => {
-         try {
-            const res = await axios.get(`${API_BASE_URL}users/${userId}`);
-            setUser(res.data.data);
-            setLoading(false);
-         } catch (err) {
-            console.error(err);
-            setLoading(false);
-         }
-      };
-      fetchUserById();
+   const fetchUserById = async () => {
+      try {
+         const res = await axios.get(`${API_BASE_URL}users/${userId}`);
+         setUser(res.data.data);
+         setLoading(false);
+      } catch (err) {
+         console.error(err);
+         setLoading(false);
+      }
+   };
 
+   useEffect(() => {
       const fetchUserPosts = async () => {
          try {
             const res = await axios.get(`${API_BASE_URL}posts/user/${userId}`);
@@ -37,15 +41,68 @@ const UserProfile = () => {
             setLoading(false);
          }
       };
+      fetchUserById();
       fetchUserPosts();
-   }, [userId]);
+   }, []);
+
+   useEffect(() => {
+      const checkIfFollowing = async () => {
+         try {
+            const res = await axios.get(`${API_BASE_URL}users/${userId}/isFollowing?userId=${currentUser._id}`);
+            setIsFollowing(res.data.isFollowing);
+         } catch (err) {
+            console.error(err);
+         }
+      };
+      checkIfFollowing();
+   }, [isFollowing]);
+
+   const handleFollow = async () => {
+      try {
+         const currentUserID = currentUser._id;
+         await axios.post(`${API_BASE_URL}users/${currentUserID}/follow`, { userId: userId });
+         fetchUserById();
+         setIsFollowing(true);
+
+         const updatedUser = { ...currentUser, following: [...currentUser.following, userId] };
+         dispatch(updateUserProfile(updatedUser));
+      } catch (err) {
+         console.error(err);
+      }
+   };
+
+   const handleUnfollow = async () => {
+      try {
+         const currentUserID = currentUser._id;
+         await axios.post(`${API_BASE_URL}users/${currentUserID}/unfollow`, { userId: userId });
+         fetchUserById();
+         setIsFollowing(false);
+
+         const updatedFollowing = currentUser.following.filter((followId: string) => followId !== userId);
+         const updatedUser = { ...currentUser, following: updatedFollowing };
+         dispatch(updateUserProfile(updatedUser));
+      } catch (err) {
+         console.error(err);
+      }
+   };
 
    return (
       <div className="w-full h-full flex justify-center items-center">
          <Card
             className="w-[50vw]"
             cover={<img alt="cover image" src={user?.coverImage} className="h-[120px] w-[600px] object-cover" />}
-            actions={[<EditProfileModal />]}
+            actions={[
+               <EditProfileModal />,
+               isFollowing ? (
+                  <Button onClick={handleUnfollow} type="primary">
+                     Unfollow
+                  </Button>
+               ) : (
+                  <Button onClick={handleFollow} type="primary">
+                     Follow
+                  </Button>
+               ),
+            ]}
          >
             {loading ? (
                <Skeleton avatar paragraph={{ rows: 10 }} />

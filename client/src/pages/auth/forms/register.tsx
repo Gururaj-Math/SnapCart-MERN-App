@@ -11,8 +11,8 @@ const Register = () => {
          const userData = {
             ...values,
             avatar: 'https://api.dicebear.com/7.x/miniavs/svg?seed=8',
-            followers: 0,
-            following: 0,
+            coverImage:
+               'https://images.pexels.com/photos/1111318/pexels-photo-1111318.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
             bio: '',
             links: [],
             location: '',

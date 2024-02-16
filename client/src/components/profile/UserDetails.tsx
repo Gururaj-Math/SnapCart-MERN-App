@@ -31,6 +31,8 @@ const socialMediaIcons: { [key: string]: JSX.Element } = {
 const UserDetails = (props: { currentUser: any; userPosts: String[] }) => {
    const [modalVisible, setModalVisible] = useState(false);
    const [modalPostData, setModalPostData] = useState<any>(null);
+   const followersCount = props.currentUser.followers.filter((follower: string) => follower.trim() !== '').length;
+   const followingCount = props.currentUser.following.filter((follow: string) => follow.trim() !== '').length;
 
    const handleImageClick = async (post: any) => {
       try {
@@ -64,11 +66,11 @@ const UserDetails = (props: { currentUser: any; userPosts: String[] }) => {
                <span className="text-gray-400">Posts</span>
             </p>
             <p className="flex flex-col items-center">
-               {props.currentUser.followers}
+               {followersCount}
                <span className="text-gray-400">Followers</span>{' '}
             </p>
             <p className="flex flex-col items-center">
-               {props.currentUser.following}
+               {followingCount}
                <span className="text-gray-400">Following</span>{' '}
             </p>
          </div>

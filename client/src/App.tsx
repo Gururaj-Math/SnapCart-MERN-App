@@ -3,7 +3,6 @@ import register from './pages/auth/forms/register';
 import login from './pages/auth/forms/login';
 import home from './pages/home';
 import './index.css';
-import userProfile from './pages/currentUserProfile';
 import savedPosts from './pages/savedPosts';
 import AuthLayout from './pages/auth/authLayout';
 import PrivateRoute from './components/PrivateRoute';
