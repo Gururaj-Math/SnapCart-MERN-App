@@ -123,7 +123,7 @@ const NotesBoard = () => {
                ))}
             </div>
             <Divider orientation="left">Following Users</Divider>
-            <div className='flex flex-col gap-2 items-center max-h-[70vw] overflow-auto'>
+            <div className="flex flex-col gap-2 items-center max-h-[70vw] overflow-auto">
                {currentUser.following &&
                   currentUser.following.map((userId: string) => (
                      <div key={userId}>

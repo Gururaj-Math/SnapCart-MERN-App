@@ -13,17 +13,18 @@ const CurrentUserProfile: React.FC = () => {
    const [loading, setLoading] = useState(true);
    const userId = currentUser._id;
 
+   const fetchUserPosts = async () => {
+      try {
+         const res = await axios.get(`${API_BASE_URL}posts/user/${userId}`);
+         setUserPosts(res.data.data);
+         setLoading(false);
+      } catch (err) {
+         console.error(err);
+         setLoading(false);
+      }
+   };
+
    useEffect(() => {
-      const fetchUserPosts = async () => {
-         try {
-            const res = await axios.get(`${API_BASE_URL}posts/user/${userId}`);
-            setUserPosts(res.data.data);
-            setLoading(false);
-         } catch (err) {
-            console.error(err);
-            setLoading(false);
-         }
-      };
       fetchUserPosts();
    }, [userId]);
 
@@ -37,7 +38,12 @@ const CurrentUserProfile: React.FC = () => {
             {loading ? (
                <Skeleton avatar paragraph={{ rows: 10 }} />
             ) : (
-               <UserDetails currentUser={currentUser} userPosts={userPosts} />
+               <UserDetails
+                  currentUser={currentUser}
+                  userPosts={userPosts}
+                  fetchUserPosts={fetchUserPosts}
+                  currentUserId={currentUser._id}
+               />
             )}
          </Card>
       </div>

@@ -30,17 +30,18 @@ const UserProfile = () => {
       }
    };
 
+   const fetchUserPosts = async () => {
+      try {
+         const res = await axios.get(`${API_BASE_URL}posts/user/${userId}`);
+         setUserPosts(res.data.data);
+         setLoading(false);
+      } catch (err) {
+         console.error(err);
+         setLoading(false);
+      }
+   };
+
    useEffect(() => {
-      const fetchUserPosts = async () => {
-         try {
-            const res = await axios.get(`${API_BASE_URL}posts/user/${userId}`);
-            setUserPosts(res.data.data);
-            setLoading(false);
-         } catch (err) {
-            console.error(err);
-            setLoading(false);
-         }
-      };
       fetchUserById();
       fetchUserPosts();
    }, []);
@@ -64,9 +65,9 @@ const UserProfile = () => {
          fetchUserById();
          setIsFollowing(true);
          message.success('You have successfully followed this user.');
-         
+
          const updatedUser = { ...currentUser, following: [...currentUser.following, userId] };
-         dispatch(updateUserProfile(updatedUser)); 
+         dispatch(updateUserProfile(updatedUser));
       } catch (err) {
          console.error(err);
          message.error('Failed to follow this user. Please try again later.');
@@ -81,8 +82,11 @@ const UserProfile = () => {
          setIsFollowing(false);
          message.success('You have successfully unfollowed this user.');
 
-         const updatedUser = { ...currentUser, following: currentUser.following.filter((id: string | undefined) => id !== userId) };
-         dispatch(updateUserProfile(updatedUser)); 
+         const updatedUser = {
+            ...currentUser,
+            following: currentUser.following.filter((id: string | undefined) => id !== userId),
+         };
+         dispatch(updateUserProfile(updatedUser));
       } catch (err) {
          console.error(err);
          message.error('Failed to unfollow this user. Please try again later.');
@@ -110,7 +114,14 @@ const UserProfile = () => {
             {loading ? (
                <Skeleton avatar paragraph={{ rows: 10 }} />
             ) : (
-               user && <UserDetails currentUser={user} userPosts={userPosts} />
+               user && (
+                  <UserDetails
+                     currentUser={user}
+                     userPosts={userPosts}
+                     fetchUserPosts={fetchUserPosts}
+                     currentUserId={currentUser._id}
+                  />
+               )
             )}
          </Card>
       </div>

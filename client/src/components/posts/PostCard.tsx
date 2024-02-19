@@ -72,7 +72,8 @@ const PostCard: React.FC<PostCardProps> = ({
             description={post.title}
          />
          <div className="p-2 flex flex-col gap-4">
-            <img alt="post cover" src={post.image} className="w-full h-full object-cover rounded-md" />
+            {post.image && <img alt="post cover" src={post.image} className="w-full h-full object-cover rounded-md" />}
+
             <p>{post.description}</p>
             <Space size={[0, 8]} wrap>
                {post.tags.map((tag: string, index: number) => (

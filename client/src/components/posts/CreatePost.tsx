@@ -57,6 +57,10 @@ const CreatePost = (props: { fetchAllPosts: () => Promise<void> }) => {
          await axios.post(`${API_BASE_URL}posts/create`, postData);
          props.fetchAllPosts();
          message.success('Post created successfully');
+         setTitle('');
+         setDescription('');
+         setImageUrl('');
+         setTags([]);
       } catch (error) {
          console.error('Error creating post:', error);
          message.error('Error creating post');
@@ -141,6 +145,7 @@ const CreatePost = (props: { fetchAllPosts: () => Promise<void> }) => {
                         <PlusOutlined /> New Tag
                      </Tag>
                   )}
+                  {imageUrl && <p className="truncate">Image : {imageUrl}</p>}
                </>
             </div>
          </div>

@@ -32,7 +32,11 @@ const FollowedUserDetails = (props: { userId: string }) => {
 
    return (
       <Card style={{ width: 300 }}>
-         <Card.Meta avatar={<Avatar src={userDetails.avatar} />} title={userDetails.username} description={userDetails.bio} />
+         <Card.Meta
+            avatar={<Avatar src={userDetails.avatar} />}
+            title={userDetails.username}
+            description={userDetails.bio}
+         />
       </Card>
    );
 };

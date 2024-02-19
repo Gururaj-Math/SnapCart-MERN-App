@@ -29,7 +29,7 @@ const getAllUsersDetails = asyncHandler(async (req, res) => {
 });
 
 const registerUser = asyncHandler(async (req, resp) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, avatar, coverImage } = req.body;
 
   if ([username, email, password].some((fields) => fields.trim() === "")) {
     throw new ApiError(400, `All fields are required`);
@@ -47,15 +47,18 @@ const registerUser = asyncHandler(async (req, resp) => {
     username,
     email,
     password,
+    avatar: avatar || 'https://api.dicebear.com/7.x/miniavs/svg?seed=8', 
+    coverImage: coverImage || 'https://images.pexels.com/photos/1291515/pexels-photo-1291515.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // Use default if not provided
   });
 
-  // removes password from user object before sending response
-  const createdUser = await User.findById(user._id).select("--password");
+  // Removes password from user object before sending response
+  const createdUser = await User.findById(user._id).select("-password");
 
   return resp
     .status(201)
     .json(new ApiResponse(200, createdUser, `User Register Successfully`));
 });
+
 
 const loginUser = asyncHandler(async (req, res) => {
     const { username, password } = req.body;

@@ -1,5 +1,5 @@
-import { Avatar, Modal, Tag } from 'antd';
-import { Card } from 'antd';
+import { Avatar, Modal, Tag, Button } from 'antd';
+import { Card, message } from 'antd';
 import {
    FacebookOutlined,
    TwitterOutlined,
@@ -15,7 +15,6 @@ import {
 import React, { useState } from 'react';
 import API_BASE_URL from '../../constant';
 import axios from 'axios';
-
 const { Meta } = Card;
 
 const socialMediaIcons: { [key: string]: JSX.Element } = {
@@ -28,20 +27,40 @@ const socialMediaIcons: { [key: string]: JSX.Element } = {
    medium: <MediumOutlined />,
 };
 
-const UserDetails = (props: { currentUser: any; userPosts: String[] }) => {
+const UserDetails = (props: {
+   currentUser: any;
+   userPosts: String[];
+   fetchUserPosts?: () => Promise<void>;
+   currentUserId: string;
+}) => {
    const [modalVisible, setModalVisible] = useState(false);
    const [modalPostData, setModalPostData] = useState<any>(null);
+   const [deletingPost, setDeletingPost] = useState(false);
    const followersCount = props.currentUser.followers.filter((follower: string) => follower.trim() !== '').length;
    const followingCount = props.currentUser.following.filter((follow: string) => follow.trim() !== '').length;
 
    const handleImageClick = async (post: any) => {
-      try {
-         const res = await axios.get(`${API_BASE_URL}posts/${post._id}`);
-         console.log(res.data.data);
-         setModalPostData(res.data.data);
+      if (post) {
+         setModalPostData(post);
          setModalVisible(true);
+      }
+   };
+
+   const deletePost = async (postId: string) => {
+      try {
+         setDeletingPost(true);
+         await axios.delete(`${API_BASE_URL}posts/delete/${postId}`);
+         message.success('Post deleted successfully');
+
+         if (props.fetchUserPosts) {
+            await props.fetchUserPosts();
+         }
+
+         setDeletingPost(false);
+         setModalVisible(false);
       } catch (error) {
-         console.error('Error fetching post data:', error);
+         console.error('Error deleting post:', error);
+         setDeletingPost(false);
       }
    };
 
@@ -123,6 +142,11 @@ const UserDetails = (props: { currentUser: any; userPosts: String[] }) => {
                         {modalPostData.likes} Likes
                      </Tag>
                   </div>
+                  {modalPostData.userOwner === props.currentUserId && (
+                     <Button onClick={() => deletePost(modalPostData._id)} loading={deletingPost}>
+                        Delete
+                     </Button>
+                  )}
                </div>
             )}
          </Modal>

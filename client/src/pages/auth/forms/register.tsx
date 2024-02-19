@@ -8,15 +8,8 @@ import { MailOutlined } from '@ant-design/icons';
 const Register = () => {
    const onFinish = async (values: any) => {
       try {
-         const userData = {
-            ...values,
-            avatar: 'https://api.dicebear.com/7.x/miniavs/svg?seed=8',
-            bio: '',
-            links: [],
-            location: '',
-         };
-         const res = await axios.post(`${API_BASE_URL}users/register`, userData);
-         console.log(res)
+         const res = await axios.post(`${API_BASE_URL}users/register`, values);
+         console.log(res);
          message.success('Registration successful');
          console.log('Registration successful');
       } catch (error) {
@@ -53,4 +46,3 @@ const Register = () => {
 };
 
 export default Register;
-
