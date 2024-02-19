@@ -99,7 +99,7 @@ const CreatePost = (props: { fetchAllPosts: () => Promise<void> }) => {
 
    return (
       <Card
-         style={{ width: 700 }}
+        className='md:w-[400px] sm:w-[300px] lg:w-[700px]'
          actions={[
             <div>
                <CloudUploadOutlined />

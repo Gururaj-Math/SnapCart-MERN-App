@@ -6,11 +6,12 @@ import { ClockCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import API_BASE_URL from '../constant';
 import { useSelector } from 'react-redux';
 import FollowedUserDetails from './FollowedUserDetails';
+import { Note } from '../types';
 
 const { Meta } = Card;
 
 const NotesBoard = () => {
-   const [notes, setNotes] = useState<any[]>([]);
+   const [notes, setNotes] = useState<Note[]>([]);
    const [newNoteDescription, setNewNoteDescription] = useState('');
    const { currentUser } = useSelector((state: any) => state.user);
 
@@ -75,13 +76,13 @@ const NotesBoard = () => {
             style={{
                overflow: 'auto',
                height: '100vh',
-               position: 'fixed',
                right: 0,
                top: 0,
                bottom: 0,
                padding: 10,
                width: 400,
             }}
+            className='lg:fixed'
          >
             <Divider orientation="left">Notes</Divider>
             <div className="flex flex-col gap-2 items-center max-h-[70vw] overflow-auto">

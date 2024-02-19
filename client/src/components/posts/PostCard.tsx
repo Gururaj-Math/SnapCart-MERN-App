@@ -36,7 +36,7 @@ const PostCard: React.FC<PostCardProps> = ({
 
    return (
       <Card
-         style={{ width: 700 }}
+         className='md:w-[400px] sm:w-[300px] lg:w-[700px]'
          actions={[
             currentUser.likedPosts.includes(post._id) ? (
                <div>

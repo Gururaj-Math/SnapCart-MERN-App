@@ -6,10 +6,11 @@ import API_BASE_URL from '../constant';
 import UserDetails from '../components/profile/UserDetails';
 import EditProfileModal from '../components/profile/EditProfileModal';
 import { Skeleton } from 'antd';
+import { Post } from '../types';
 
 const CurrentUserProfile: React.FC = () => {
    const { currentUser } = useSelector((state: any) => state.user);
-   const [userPosts, setUserPosts] = useState<String[]>([]);
+   const [userPosts, setUserPosts] = useState<Post[]>([]);
    const [loading, setLoading] = useState(true);
    const userId = currentUser._id;
 

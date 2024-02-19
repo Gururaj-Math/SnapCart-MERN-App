@@ -8,10 +8,11 @@ import EditProfileModal from '../components/profile/EditProfileModal';
 import { Skeleton, Button, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../redux/user/userSlice';
+import { Post, User } from '../types';
 
 const UserProfile = () => {
-   const [user, setUser] = useState<any[]>([]);
-   const [userPosts, setUserPosts] = useState<string[]>([]);
+   const [user, setUser] = useState<User>();
+   const [userPosts, setUserPosts] = useState<Post[]>([]);
    const [loading, setLoading] = useState(true);
    const [isFollowing, setIsFollowing] = useState(false);
    const { currentUser } = useSelector((state: any) => state.user);

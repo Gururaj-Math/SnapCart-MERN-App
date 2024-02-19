@@ -5,6 +5,7 @@ import axios from 'axios';
 import API_BASE_URL from '../constant';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { User } from '../types';
 
 const { Meta } = Card;
 
@@ -30,7 +31,7 @@ const SearchUsers = () => {
       setSearchQuery(value);
    };
 
-   const filteredUsers = users.filter((user: any) => {
+   const filteredUsers = users.filter((user: User) => {
       const username = user.username.toLowerCase();
       const query = searchQuery.toLowerCase();
       return username.includes(query) && user._id !== currentUser._id; // Exclude the current user
@@ -47,7 +48,7 @@ const SearchUsers = () => {
                onChange={(e) => handleSearch(e.target.value)}
             />
          </div>
-         {filteredUsers.map((user: any, key) => (
+         {filteredUsers.map((user: User, key) => (
             <Link to={`/profile/${user._id}`} key={key}>
                <Card key={user._id} className="w-[40rem]">
                   <Meta avatar={<Avatar src={user.avatar} />} title={user.username} description={user.bio} />

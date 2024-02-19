@@ -15,6 +15,7 @@ import {
 import React, { useState } from 'react';
 import API_BASE_URL from '../../constant';
 import axios from 'axios';
+import { Post } from '../../types';
 const { Meta } = Card;
 
 const socialMediaIcons: { [key: string]: JSX.Element } = {
@@ -29,12 +30,12 @@ const socialMediaIcons: { [key: string]: JSX.Element } = {
 
 const UserDetails = (props: {
    currentUser: any;
-   userPosts: String[];
+   userPosts: Post[];
    fetchUserPosts?: () => Promise<void>;
    currentUserId: string;
 }) => {
    const [modalVisible, setModalVisible] = useState(false);
-   const [modalPostData, setModalPostData] = useState<any>(null);
+   const [modalPostData, setModalPostData] = useState<Post>();
    const [deletingPost, setDeletingPost] = useState(false);
    const followersCount = props.currentUser.followers.filter((follower: string) => follower.trim() !== '').length;
    const followingCount = props.currentUser.following.filter((follow: string) => follow.trim() !== '').length;

@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { Avatar, Card, Skeleton } from 'antd';
 import axios from 'axios';
 import API_BASE_URL from '../constant';
+import { User } from '../types';
 
 const FollowedUserDetails = (props: { userId: string }) => {
-   const [userDetails, setUserDetails] = useState(null);
+   const [userDetails, setUserDetails] = useState<User>();
    const [loading, setLoading] = useState(true);
 
    useEffect(() => {

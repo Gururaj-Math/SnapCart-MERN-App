@@ -7,9 +7,10 @@ import { updateUserProfile } from '../redux/user/userSlice';
 import ShareProfileModal from '../components/posts/ShareProfileModal';
 import CreatePost from '../components/posts/CreatePost';
 import PostCard from '../components/posts/PostCard';
+import { Post } from '../types';
 
 const Home = () => {
-   const [allPosts, setAllPosts] = useState<any[]>([]);
+   const [allPosts, setAllPosts] = useState<Post[]>([]);
    const [shareModalVisible, setShareModalVisible] = useState<boolean>(false);
    const [selectedPostId, setSelectedPostId] = useState<string>('');
    const { currentUser } = useSelector((state: any) => state.user);
@@ -126,7 +127,7 @@ const Home = () => {
    return (
       <div className="flex flex-col justify-center items-center overflow-y-auto gap-4 p-2">
          <CreatePost fetchAllPosts={fetchAllPosts} />
-         {allPosts.map((post: any, key) => (
+         {allPosts.map((post: Post, key) => (
             <div key={key}>
                <PostCard
                   post={post}

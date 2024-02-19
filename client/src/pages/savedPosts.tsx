@@ -6,9 +6,10 @@ import { message } from 'antd';
 import { updateUserProfile } from '../redux/user/userSlice';
 import ShareProfileModal from '../components/posts/ShareProfileModal';
 import PostCard from '../components/posts/PostCard';
+import { Post } from '../types';
 
 const SavedPosts = () => {
-   const [allSavedPosts, setAllSavedPosts] = useState<any[]>([]);
+   const [allSavedPosts, setAllSavedPosts] = useState<Post[]>([]);
    const [shareModalVisible, setShareModalVisible] = useState(false);
    const [selectedPostId, setSelectedPostId] = useState('');
    const { currentUser } = useSelector((state: any) => state.user);
@@ -125,7 +126,7 @@ const SavedPosts = () => {
 
    return (
       <div className="flex flex-col justify-center items-center overflow-y-auto gap-4 p-2">
-         {allSavedPosts.map((post: any, index) => (
+         {allSavedPosts.map((post: Post, index) => (
             <div key={index}>
                <PostCard
                   post={post}

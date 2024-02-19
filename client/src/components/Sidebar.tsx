@@ -69,6 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                bottom: 0,
                padding: 10,
             }}
+            className='hidden md:block'
          >
             <div className="demo-logo-vertical text-white text-center text-2xl p-4">SnapCart</div>
             <Menu theme="dark" mode="vertical" defaultSelectedKeys={['2']}>
@@ -85,8 +86,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
          </Sider>
          <Layout style={{ marginLeft: 200 }}>
             <div className="flex justify-around realtive">
-               <Content style={{ minHeight: '100vh', marginRight: 300 }}>{children}</Content>
-               <NotesBoard />
+               <Content className='min-h-[100vh] lg:mr-[300px]'>{children}</Content>
+               <div className='hidden lg:block'>
+                  <NotesBoard />
+               </div>
             </div>
          </Layout>
       </Layout>
