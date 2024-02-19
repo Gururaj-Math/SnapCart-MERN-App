@@ -69,9 +69,12 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                bottom: 0,
                padding: 10,
             }}
-            className='hidden md:block'
+            className="hidden md:block"
          >
-            <div className="demo-logo-vertical text-white text-center text-2xl p-4">SnapCart</div>
+            <div className="flex items-center w-full justify-center">
+               <img src="../../public/logo.png" className="h-[200px] w-[200px]" />
+            </div>
+
             <Menu theme="dark" mode="vertical" defaultSelectedKeys={['2']}>
                {items.map((item) => (
                   <Menu.Item key={item.key} icon={item.icon} style={{ margin: '20px 0' }}>
@@ -86,8 +89,8 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
          </Sider>
          <Layout style={{ marginLeft: 200 }}>
             <div className="flex justify-around realtive">
-               <Content className='min-h-[100vh] lg:mr-[300px]'>{children}</Content>
-               <div className='hidden lg:block'>
+               <Content className="min-h-[100vh] lg:mr-[300px]">{children}</Content>
+               <div className="hidden lg:block">
                   <NotesBoard />
                </div>
             </div>

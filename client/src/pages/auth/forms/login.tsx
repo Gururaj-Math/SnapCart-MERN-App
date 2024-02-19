@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { logInStart, logInSuccess, logInFailure } from '../../../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import API_BASE_URL from '../../../constant';
+import loginSvg from '../../../../public/login.svg';
 
 const Login = () => {
    const [_, setCookie] = useCookies(['access_token']);
@@ -28,26 +29,32 @@ const Login = () => {
    };
 
    return (
-      <div className="flex justify-center items-center h-[90vh]">
-         <Form className="w-[400px]" initialValues={{ remember: true }} onFinish={onFinish}>
-            <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>
-               <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-            </Form.Item>
-            <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}>
-               <Input
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
-                  placeholder="Password"
-               />
-            </Form.Item>
+      <div className="flex justify-evenly">
+         <div className="flex flex-col justify-center items-center h-[100vh] w-full bg-black">
+            <img src="../../../../public/logo.png" className="max-h-[250px]" />
+            <Form className="w-[400px]" initialValues={{ remember: true }} onFinish={onFinish}>
+               <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>
+                  <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+               </Form.Item>
+               <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}>
+                  <Input
+                     prefix={<LockOutlined className="site-form-item-icon" />}
+                     type="password"
+                     placeholder="Password"
+                  />
+               </Form.Item>
 
-            <Form.Item>
-               <Button htmlType="submit" className="w-full">
-                  Log in
-               </Button>
-               Or <Link to={'/auth/register'}>register now!</Link>
-            </Form.Item>
-         </Form>
+               <Form.Item className="text-white">
+                  <Button htmlType="submit" className="w-full" type="dashed" style={{ color: 'white' }}>
+                     Log in
+                  </Button>
+                  Or <Link to={'/auth/register'}>register now!</Link>
+               </Form.Item>
+            </Form>
+         </div>
+         <div className="w-full flex justify-center items-center">
+            <img src={loginSvg} className="max-h-[600px]" />
+         </div>
       </div>
    );
 };

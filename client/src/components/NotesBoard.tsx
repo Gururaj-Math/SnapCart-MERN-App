@@ -82,7 +82,7 @@ const NotesBoard = () => {
                padding: 10,
                width: 400,
             }}
-            className='lg:fixed'
+            className="lg:fixed"
          >
             <Divider orientation="left">Notes</Divider>
             <div className="flex flex-col gap-2 items-center max-h-[70vw] overflow-auto">
