@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { message } from 'antd';
 import NotesBoard from './NotesBoard';
+import Logo from '../../public/logo.png'
 
 const { Content, Sider } = Layout;
 
@@ -96,7 +97,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                   {collapsed ? (
                      <div className="text-4xl font-bold text-white">S</div>
                   ) : (
-                     <img src="../../public/logo.png" className="h-[200px] w-[200px]" />
+                     <img src={Logo} className="h-[200px] w-[200px]" />
                   )}
                </div>
 

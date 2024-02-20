@@ -2,13 +2,15 @@ import axios from 'axios';
 import API_BASE_URL from '../../../constant';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
 import loginSvg from '../../../../public/login.svg';
 import { useState } from 'react';
+import Logo from '../../../../public/logo.png'
 
 const Register = () => {
    const [loading, setLoading] = useState(false);
+   const navigate = useNavigate()
 
    const onFinish = async (values: any) => {
       try {
@@ -16,6 +18,7 @@ const Register = () => {
          const res = await axios.post(`${API_BASE_URL}users/register`, values);
          console.log(res);
          message.success('Registration successful');
+         navigate('/auth/login')
          console.log('Registration successful');
       } catch (error) {
          console.error('Registration failed:', error);
@@ -27,7 +30,7 @@ const Register = () => {
    return (
       <div className="flex justify-evenly">
          <div className="flex flex-col justify-center items-center h-[100vh] w-full bg-black">
-            <img src="../../../../public/logo.png" className="max-h-[250px]" />
+            <img src={Logo} className="max-h-[250px]" />
             <Form className="w-[300px] md:w-[400px]" initialValues={{ remember: true }} onFinish={onFinish}>
                <Form.Item name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
                   <Input prefix={<MailOutlined />} placeholder="Email" />

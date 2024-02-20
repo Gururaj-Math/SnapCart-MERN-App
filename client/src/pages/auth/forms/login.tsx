@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import API_BASE_URL from '../../../constant';
 import loginSvg from '../../../../public/login.svg';
 import { useState } from 'react';
+import Logo from '../../../../public/logo.png'
 
 const Login = () => {
    const [_, setCookie] = useCookies(['access_token']);
@@ -35,7 +36,7 @@ const Login = () => {
    return (
       <div className="flex justify-evenly">
          <div className="flex flex-col justify-center items-center h-[100vh] w-full bg-black">
-            <img src="../../../../public/logo.png" className="max-h-[250px]" />
+            <img src={Logo} className="max-h-[250px]" />
             <Form className="w-[300px] md:w-[400px]" initialValues={{ remember: true }} onFinish={onFinish}>
                <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>
                   <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
