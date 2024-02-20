@@ -22,7 +22,7 @@ const Register = () => {
       <div className="flex justify-evenly">
          <div className="flex flex-col justify-center items-center h-[100vh] w-full bg-black">
             <img src="../../../../public/logo.png" className="max-h-[250px]" />
-            <Form className="w-[400px]" initialValues={{ remember: true }} onFinish={onFinish}>
+            <Form className="w-[300px] md:w-[400px]" initialValues={{ remember: true }} onFinish={onFinish}>
                <Form.Item name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
                   <Input prefix={<MailOutlined />} placeholder="Email" />
                </Form.Item>
@@ -45,8 +45,8 @@ const Register = () => {
                </Form.Item>
             </Form>
          </div>
-         <div className="w-full flex justify-center items-center">
-            <img src={loginSvg} className="max-h-[600px]" />
+         <div className="w-full hidden md:flex justify-center items-center">
+            <img src={loginSvg} className="max-h-[100px] md:max-h-[600px]" />
          </div>
       </div>
    );

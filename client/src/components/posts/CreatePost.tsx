@@ -99,26 +99,29 @@ const CreatePost = (props: { fetchAllPosts: () => Promise<void> }) => {
 
    return (
       <Card
-         className="md:w-[400px] sm:w-[300px] lg:w-[700px]"
+         className="w-full md:w-[400px] sm:w-[300px] lg:w-[700px]"
          actions={[
-            <div>
-               <CloudUploadOutlined />
-               <div className="px-6">
-                  <UploadWidget buttonName="Upload Image" onUpload={updateImageUrl} class="border-0" />
-               </div>
-            </div>,
-            <div>
-               <CheckOutlined />
+            <div className="flex justify-evenly flex-col md:flex-row">
                <div>
-                  <Button className="border-0" onClick={handleSave}>
-                     Save
-                  </Button>
+                  <CloudUploadOutlined />
+                  <div className="px-6">
+                     <UploadWidget buttonName="Upload Image" onUpload={updateImageUrl} class="border-0" />
+                  </div>
+               </div>
+               ,
+               <div>
+                  <CheckOutlined />
+                  <div>
+                     <Button className="border-0" onClick={handleSave}>
+                        Save
+                     </Button>
+                  </div>
                </div>
             </div>,
          ]}
       >
-         <div className="flex justify-center items-center  ">
-            <Avatar src={currentUser.avatar} className="h-20 w-24" />
+         <div className="flex flex-col md:flex-row justify-center items-center  ">
+            <Avatar src={currentUser.avatar} className="h-24 md:h-20 w-24" />
             <div className="p-4 w-full flex flex-col gap-2">
                <Input placeholder="Title" className="p-2" value={title} onChange={(e) => setTitle(e.target.value)} />
                <Input

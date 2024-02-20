@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import API_BASE_URL from '../constant';
 import { useDispatch, useSelector } from 'react-redux';
-import { message } from 'antd';
+import { message, Empty } from 'antd';
 import { updateUserProfile } from '../redux/user/userSlice';
 import ShareProfileModal from '../components/posts/ShareProfileModal';
 import PostCard from '../components/posts/PostCard';
@@ -126,19 +126,23 @@ const SavedPosts = () => {
 
    return (
       <div className="flex flex-col justify-center items-center overflow-y-auto gap-4 p-2">
-         {allSavedPosts.map((post: Post, index) => (
-            <div key={index}>
-               <PostCard
-                  post={post}
-                  currentUser={currentUser}
-                  handleLike={handleLike}
-                  handleUnlike={handleUnlike}
-                  handleSavePost={handleSavePost}
-                  handleRemoveSavedPost={handleRemoveSavedPost}
-                  handleSharePost={handleShare}
-               />
-            </div>
-         ))}
+         {allSavedPosts.length > 0 ? (
+            allSavedPosts.map((post: Post, index) => (
+               <div key={index}>
+                  <PostCard
+                     post={post}
+                     currentUser={currentUser}
+                     handleLike={handleLike}
+                     handleUnlike={handleUnlike}
+                     handleSavePost={handleSavePost}
+                     handleRemoveSavedPost={handleRemoveSavedPost}
+                     handleSharePost={handleShare}
+                  />
+               </div>
+            ))
+         ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No saved posts yet" />
+         )}
          <ShareProfileModal
             shareModalVisible={shareModalVisible}
             setShareModalVisible={setShareModalVisible}

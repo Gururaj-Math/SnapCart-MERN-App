@@ -1,5 +1,12 @@
-import React, { ReactNode } from 'react';
-import { BookOutlined, HomeOutlined, LogoutOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons';
+import React, { ReactNode, useEffect, useState } from 'react';
+import {
+   BookOutlined,
+   HomeOutlined,
+   LogoutOutlined,
+   SearchOutlined,
+   UserOutlined,
+   MenuOutlined,
+} from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
@@ -48,6 +55,25 @@ const items = [
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
    const [_, setCookies] = useCookies(['access_token']);
    const navigate = useNavigate();
+   const [collapsed, setCollapsed] = useState(false);
+
+   useEffect(() => {
+      const handleResize = () => {
+         if (window.innerWidth < 768) {
+            setCollapsed(true);
+         } else {
+            setCollapsed(false);
+         }
+      };
+
+      handleResize();
+
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+         window.removeEventListener('resize', handleResize);
+      };
+   }, []);
 
    const logout = () => {
       setCookies('access_token', '');
@@ -57,45 +83,50 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
    };
 
    return (
-      <Layout hasSider>
-         <Sider
-            width={300}
-            style={{
-               overflow: 'auto',
-               height: '100vh',
-               position: 'fixed',
-               left: 0,
-               top: 0,
-               bottom: 0,
-               padding: 10,
-            }}
-            className="hidden md:block"
-         >
-            <div className="flex items-center w-full justify-center">
-               <img src="../../public/logo.png" className="h-[200px] w-[200px]" />
-            </div>
+      <div>
+         <Layout hasSider>
+            <Sider
+               width={300}
+               style={{
+                  overflow: 'auto',
+                  height: '100vh',
+                  position: 'fixed',
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  padding: 10,
+               }}
+               collapsed={collapsed}
+               collapsedWidth={80}
+            >
+               <div className="flex items-center w-full justify-center">
+                  {collapsed ? (
+                     <div className="text-4xl font-bold text-white">S</div>
+                  ) : (
+                     <img src="../../public/logo.png" className="h-[200px] w-[200px]" />
+                  )}
+               </div>
 
-            <Menu theme="dark" mode="vertical" defaultSelectedKeys={['2']}>
-               {items.map((item) => (
-                  <Menu.Item key={item.key} icon={item.icon} style={{ margin: '20px 0' }}>
-                     {item.path === '/auth/login' ? (
-                        <a onClick={logout}>{item.label}</a>
-                     ) : (
-                        <Link to={item.path}>{item.label}</Link>
-                     )}
-                  </Menu.Item>
-               ))}
-            </Menu>
-         </Sider>
-         <Layout style={{ marginLeft: 200 }}>
-            <div className="flex justify-around realtive">
+               <Menu theme="dark" mode="vertical" defaultSelectedKeys={['2']}>
+                  {items.map((item) => (
+                     <Menu.Item key={item.key} icon={item.icon} style={{ margin: '20px 0' }}>
+                        {item.path === '/auth/login' ? (
+                           <a onClick={logout}>{item.label}</a>
+                        ) : (
+                           <Link to={item.path}>{item.label}</Link>
+                        )}
+                     </Menu.Item>
+                  ))}
+               </Menu>
+            </Sider>
+            <Layout style={{ overflow: 'auto', marginLeft: collapsed ? 85 : 200 }}>
                <Content className="min-h-[100vh] lg:mr-[300px]">{children}</Content>
                <div className="hidden lg:block">
                   <NotesBoard />
                </div>
-            </div>
+            </Layout>
          </Layout>
-      </Layout>
+      </div>
    );
 };
 

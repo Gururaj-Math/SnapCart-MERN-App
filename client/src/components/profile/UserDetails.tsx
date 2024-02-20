@@ -1,4 +1,4 @@
-import { Avatar, Modal, Tag, Button } from 'antd';
+import { Avatar, Modal, Tag, Button, Empty } from 'antd';
 import { Card, message } from 'antd';
 import {
    FacebookOutlined,
@@ -74,7 +74,7 @@ const UserDetails = (props: {
    };
 
    return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 text-sm md:text-lg">
          <Meta
             avatar={<Avatar src={props.currentUser.avatar} className="w-16 h-16" />}
             title={props.currentUser.username}
@@ -94,7 +94,7 @@ const UserDetails = (props: {
                <span className="text-gray-400">Following</span>{' '}
             </p>
          </div>
-         <div className="p-4 border-2 rounded-md flex justify-between px-12">
+         <div className="p-4 border-2 rounded-md flex justify-between md:px-12 flex-col md:flex-row">
             <div>
                <h1 className="font-semibold text-gray-500 flex items-center gap-2">
                   <span>
@@ -111,7 +111,7 @@ const UserDetails = (props: {
                </h1>
                <p>{props.currentUser.location}</p>
             </div>
-            <div className="flex flex-col justify-center items-center px-4 gap-2">
+            <div className="flex flex-col items-start md:justify-center md:items-center md:px-4 gap-2">
                <h1 className="font-semibold text-gray-500 text-center">Social Links</h1>
                <div className="flex items-center gap-4">
                   {props.currentUser.links
@@ -125,6 +125,7 @@ const UserDetails = (props: {
             </div>
          </div>
          <div className="flex w-full gap-2 flex-wrap justify-evenly max-h-[200px] overflow-auto">
+            {props.userPosts.length === 0 && <Empty description="No posts yet" />}
             {props.userPosts.map((post: any, index) => (
                <div key={index} className="border-2 rounded-md" onClick={() => handleImageClick(post)}>
                   <img src={post.image} className="w-[200px] h-[200px] rounded-md" />

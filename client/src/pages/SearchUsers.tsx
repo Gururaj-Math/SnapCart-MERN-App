@@ -40,7 +40,7 @@ const SearchUsers = () => {
    return (
       <div className="flex items-center flex-col w-full gap-2 max-h-[90vh overflow-auto] p-2">
          <h1 className="font-bold text-xl">All Users</h1>
-         <div className="w-[40rem] flex gap-2 items-center">
+         <div className="md:w-[40rem] flex gap-2 items-center">
             <SearchOutlined className="text-2xl" />
             <Input
                className="p-4 rounded-xl"
@@ -50,7 +50,7 @@ const SearchUsers = () => {
          </div>
          {filteredUsers.map((user: User, key) => (
             <Link to={`/profile/${user._id}`} key={key}>
-               <Card key={user._id} className="w-[40rem]">
+               <Card key={user._id} className="w-full md:w-[40rem]">
                   <Meta avatar={<Avatar src={user.avatar} />} title={user.username} description={user.bio} />
                </Card>
             </Link>

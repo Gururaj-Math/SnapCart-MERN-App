@@ -32,7 +32,7 @@ const CurrentUserProfile: React.FC = () => {
    return (
       <div className="w-full h-full flex justify-center items-center">
          <Card
-            className="w-[50vw]"
+            className="w-full md:w-[50vw]"
             cover={<img alt="cover image" src={currentUser.coverImage} className="h-[120px] w-[600px] object-cover" />}
             actions={[<EditProfileModal />]}
          >
