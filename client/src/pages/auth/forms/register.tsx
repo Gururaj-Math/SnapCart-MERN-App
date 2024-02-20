@@ -5,16 +5,22 @@ import { Button, Form, Input, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
 import loginSvg from '../../../../public/login.svg';
+import { useState } from 'react';
 
 const Register = () => {
+   const [loading, setLoading] = useState(false);
+
    const onFinish = async (values: any) => {
       try {
+         setLoading(true);
          const res = await axios.post(`${API_BASE_URL}users/register`, values);
          console.log(res);
          message.success('Registration successful');
          console.log('Registration successful');
       } catch (error) {
          console.error('Registration failed:', error);
+      } finally {
+         setLoading(false);
       }
    };
 
@@ -38,8 +44,14 @@ const Register = () => {
                </Form.Item>
 
                <Form.Item className="text-white">
-                  <Button htmlType="submit" className="w-full" type="dashed" style={{ color: 'white' }}>
-                     Register
+                  <Button
+                     htmlType="submit"
+                     className="w-full"
+                     type="dashed"
+                     style={{ color: 'white' }}
+                     loading={loading}
+                  >
+                     {loading ? 'Registering...' : 'Register'}
                   </Button>
                   Or <Link to={'/auth/login'}>login now!</Link>
                </Form.Item>

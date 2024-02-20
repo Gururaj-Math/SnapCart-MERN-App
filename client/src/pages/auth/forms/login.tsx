@@ -7,15 +7,17 @@ import { logInStart, logInSuccess, logInFailure } from '../../../redux/user/user
 import { useDispatch } from 'react-redux';
 import API_BASE_URL from '../../../constant';
 import loginSvg from '../../../../public/login.svg';
+import { useState } from 'react';
 
 const Login = () => {
    const [_, setCookie] = useCookies(['access_token']);
    const dispatch = useDispatch();
    const navigate = useNavigate();
-   // const { loading, error } = useSelector((state) => state.user);
+   const [loading, setLoading] = useState(false);
 
    const onFinish = async (values: string[]) => {
       try {
+         setLoading(true);
          dispatch(logInStart());
          const res = await axios.post(`${API_BASE_URL}users/login`, values);
          dispatch(logInSuccess(res.data.data.user));
@@ -25,6 +27,8 @@ const Login = () => {
       } catch (error) {
          dispatch(logInFailure());
          console.error('Login failed:', error);
+      } finally {
+         setLoading(false);
       }
    };
 
@@ -45,8 +49,14 @@ const Login = () => {
                </Form.Item>
 
                <Form.Item className="text-white">
-                  <Button htmlType="submit" className="w-full" type="dashed" style={{ color: 'white' }}>
-                     Log in
+                  <Button
+                     htmlType="submit"
+                     className="w-full"
+                     type="dashed"
+                     style={{ color: 'white' }}
+                     loading={loading}
+                  >
+                     {loading ? 'Logging in...' : 'Log in'}
                   </Button>
                   Or <Link to={'/auth/register'}>register now!</Link>
                </Form.Item>
