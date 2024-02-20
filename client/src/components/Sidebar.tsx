@@ -1,11 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import {
-   BookOutlined,
-   HomeOutlined,
-   LogoutOutlined,
-   SearchOutlined,
-   UserOutlined,
-} from '@ant-design/icons';
+import { BookOutlined, HomeOutlined, LogoutOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';

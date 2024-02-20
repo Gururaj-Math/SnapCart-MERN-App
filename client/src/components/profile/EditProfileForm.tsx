@@ -36,11 +36,11 @@ const EditProfileForm = (props: {
          scrollToFirstError
          className="bg-white p-4 rounded-md flex flex-col items-center justify-center gap-4"
       >
-         <div className="w-[400px]">
+         <div className="md:w-[400px]">
             <UploadWidget buttonName="Upload New Avatar" onUpload={updateAvatarUrl} />
          </div>
 
-         <div className="w-[400px]">
+         <div className="md:w-[400px]">
             <UploadWidget buttonName="Upload New Cover Image" onUpload={updateCoverImageUrl} />
          </div>
 
