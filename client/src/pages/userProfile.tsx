@@ -4,7 +4,6 @@ import Card from 'antd/es/card/Card';
 import axios from 'axios';
 import API_BASE_URL from '../constant';
 import UserDetails from '../components/profile/UserDetails';
-import EditProfileModal from '../components/profile/EditProfileModal';
 import { Skeleton, Button, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../redux/user/userSlice';

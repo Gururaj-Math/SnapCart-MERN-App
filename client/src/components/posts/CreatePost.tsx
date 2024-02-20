@@ -99,7 +99,7 @@ const CreatePost = (props: { fetchAllPosts: () => Promise<void> }) => {
 
    return (
       <Card
-         className="w-full md:w-[400px] sm:w-[300px] lg:w-[700px]"
+         className="w-full md:w-[400px] sm:w-[300px] lg:w-[600px]"
          actions={[
             <div className="flex justify-evenly flex-col md:flex-row">
                <div>
