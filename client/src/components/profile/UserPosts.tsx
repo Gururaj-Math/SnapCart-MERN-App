@@ -7,7 +7,7 @@ const UserPosts = (props: { userPosts: Post[]; handleImageClick: (post: Post) =>
          {props.userPosts.length === 0 && <Empty description="No posts yet" />}
          {props.userPosts.map((post: any, index) => (
             <div key={index} className="border-2 rounded-md" onClick={() => props.handleImageClick(post)}>
-               <img src={post.image} className="w-[160px] h-[160px] rounded-md" alt={post.title} />
+               <img src={post.image} className="w-[160px] h-[160px] rounded-md object-cover" alt={post.title} />
             </div>
          ))}
       </div>
