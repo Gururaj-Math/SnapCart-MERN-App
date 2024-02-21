@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Avatar, Space, Tag } from 'antd';
+import { Card, Avatar, Space, Tag, Spin } from 'antd';
 import { BookOutlined, HeartOutlined, HeartFilled, BookFilled, ShareAltOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
@@ -24,6 +24,7 @@ const PostCard: React.FC<PostCardProps> = ({
    currentUser,
 }) => {
    const [randomColor, setRandomColor] = useState<string>('');
+   const [likeLoading, setLikeLoading] = useState<boolean>(false);
 
    useEffect(() => {
       setRandomColor(getRandomColor());
@@ -34,25 +35,39 @@ const PostCard: React.FC<PostCardProps> = ({
       return colors[Math.floor(Math.random() * colors.length)];
    };
 
+   const handleLikeClick = async () => {
+      setLikeLoading(true);
+      await handleLike(post._id);
+      setLikeLoading(false);
+   };
+
+   const handleUnlikeClick = async () => {
+      setLikeLoading(true); // You may need to update this logic to handle loading state appropriately for unlike action
+      await handleUnlike(post._id);
+      setLikeLoading(false); // You may need to update this logic to handle loading state appropriately for unlike action
+   };
+
    return (
       <Card
          className="md:w-[400px] sm:w-[300px] lg:w-[600px]"
          actions={[
-            currentUser.likedPosts.includes(post._id) ? (
+            likeLoading ? (
+               <Spin size="small" />
+            ) : currentUser.likedPosts.includes(post._id) ? (
                <div>
-                  <HeartFilled key="like" onClick={() => handleUnlike(post._id)} style={{ color: 'red' }} />
+                  <HeartFilled key="like" onClick={handleUnlikeClick} style={{ color: 'red' }} />
                   <p>{post.likes} Likes</p>
                </div>
             ) : (
                <div>
-                  <HeartOutlined key="unlike" onClick={() => handleLike(post._id)} />
+                  <HeartOutlined key="unlike" onClick={handleLikeClick} />
                   <p>{post.likes} Likes</p>
                </div>
             ),
             currentUser.savedPosts.includes(post._id) ? (
                <div>
                   <BookFilled key="save" onClick={() => handleRemoveSavedPost(post._id)} />
-                  <p>Remove From Saved</p>
+                  <p>Unsave Post</p>
                </div>
             ) : (
                <div>

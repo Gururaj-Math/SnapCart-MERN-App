@@ -6,11 +6,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
 import loginSvg from '../../../../public/login.svg';
 import { useState } from 'react';
-import Logo from '../../../../public/logo.png'
+import Logo from '../../../../public/logo.png';
 
 const Register = () => {
    const [loading, setLoading] = useState(false);
-   const navigate = useNavigate()
+   const navigate = useNavigate();
 
    const onFinish = async (values: any) => {
       try {
@@ -18,7 +18,7 @@ const Register = () => {
          const res = await axios.post(`${API_BASE_URL}users/register`, values);
          console.log(res);
          message.success('Registration successful');
-         navigate('/auth/login')
+         navigate('/auth/login');
          console.log('Registration successful');
       } catch (error) {
          console.error('Registration failed:', error);

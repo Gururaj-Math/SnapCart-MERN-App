@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import API_BASE_URL from '../../../constant';
 import loginSvg from '../../../../public/login.svg';
 import { useState } from 'react';
-import Logo from '../../../../public/logo.png'
+import Logo from '../../../../public/logo.png';
 
 const Login = () => {
    const [_, setCookie] = useCookies(['access_token']);

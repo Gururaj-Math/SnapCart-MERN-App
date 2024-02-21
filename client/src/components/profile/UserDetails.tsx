@@ -74,7 +74,7 @@ const UserDetails = (props: {
    };
 
    return (
-      <div className="flex flex-col gap-4 text-sm md:text-lg">
+      <div className="flex flex-col gap-4 text-[13px] md:text-md">
          <Meta
             avatar={<Avatar src={props.currentUser.avatar} className="w-16 h-16" />}
             title={props.currentUser.username}

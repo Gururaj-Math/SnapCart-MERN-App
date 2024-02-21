@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { message } from 'antd';
 import NotesBoard from './NotesBoard';
-import Logo from '../../public/logo.png'
+import Logo from '../../public/logo.png';
+import Favicon from '../../public/favicon.png';
 
 const { Content, Sider } = Layout;
 
@@ -95,7 +96,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             >
                <div className="flex items-center w-full justify-center">
                   {collapsed ? (
-                     <div className="text-4xl font-bold text-white">S</div>
+                     <img src={Favicon} className="h-[70px]" />
                   ) : (
                      <img src={Logo} className="h-[200px] w-[200px]" />
                   )}

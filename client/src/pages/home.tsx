@@ -57,7 +57,8 @@ const Home = () => {
          });
          setAllPosts(updatedPosts);
          message.success('Post liked successfully');
-         dispatch(updateUserProfile({ ...currentUser, likedPosts: [...currentUser.likedPosts, postId] }));
+         const updatedCurrentUser = { ...currentUser, likedPosts: [...currentUser.likedPosts, postId] };
+         dispatch(updateUserProfile(updatedCurrentUser));
       } catch (error) {
          console.error('Error liking post:', error);
          message.error('Error liking post');
@@ -67,7 +68,6 @@ const Home = () => {
    const handleUnlike = async (postId: string) => {
       try {
          await axios.post(`${API_BASE_URL}posts/unlike/${postId}`, { userId: currentUser._id });
-
          const updatedPosts = allPosts.map((post) => {
             if (post._id === postId) {
                return { ...post, likes: post.likes - 1 };
@@ -77,7 +77,8 @@ const Home = () => {
          setAllPosts(updatedPosts);
          message.success('Post unliked successfully');
          const updatedLikedPosts = currentUser.likedPosts.filter((id: string) => id !== postId);
-         dispatch(updateUserProfile({ ...currentUser, likedPosts: updatedLikedPosts }));
+         const updatedCurrentUser = { ...currentUser, likedPosts: updatedLikedPosts };
+         dispatch(updateUserProfile(updatedCurrentUser));
       } catch (error) {
          console.error('Error unliking post:', error);
          message.error('Error unliking post');

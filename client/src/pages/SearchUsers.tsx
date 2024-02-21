@@ -50,7 +50,7 @@ const SearchUsers = () => {
          </div>
          {filteredUsers.map((user: User, key) => (
             <Link to={`/profile/${user._id}`} key={key}>
-               <Card key={user._id} className="w-full md:w-[40rem]">
+               <Card key={user._id} className="w-[15rem] md:w-[40rem]">
                   <Meta avatar={<Avatar src={user.avatar} />} title={user.username} description={user.bio} />
                </Card>
             </Link>

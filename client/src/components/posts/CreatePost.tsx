@@ -104,15 +104,13 @@ const CreatePost = (props: { fetchAllPosts: () => Promise<void> }) => {
             <div className="flex justify-evenly flex-col md:flex-row">
                <div>
                   <CloudUploadOutlined />
-                  <div className="px-6">
-                     <UploadWidget buttonName="Upload Image" onUpload={updateImageUrl} class="border-0" />
-                  </div>
+                  <UploadWidget buttonName="Upload Image" onUpload={updateImageUrl} class="border-0" />
                </div>
-               ,
+
                <div>
                   <CheckOutlined />
                   <div>
-                     <Button className="border-0" onClick={handleSave}>
+                     <Button className="border-0 bg-white w-full" type="primary" onClick={handleSave}>
                         Save
                      </Button>
                   </div>
@@ -120,6 +118,7 @@ const CreatePost = (props: { fetchAllPosts: () => Promise<void> }) => {
             </div>,
          ]}
       >
+         <h1 className="text-center font-bold text-xl">Create New Post</h1>
          <div className="flex flex-col md:flex-row justify-center items-center  ">
             <Avatar src={currentUser.avatar} className="h-24 md:h-20 w-24" />
             <div className="p-4 w-full flex flex-col gap-2">
