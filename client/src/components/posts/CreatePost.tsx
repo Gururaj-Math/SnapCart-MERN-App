@@ -104,15 +104,15 @@ const CreatePost = (props: { fetchAllPosts: () => Promise<void> }) => {
             <div className="flex justify-evenly flex-col md:flex-row">
                <div>
                   <CloudUploadOutlined />
-                  <div className='md:w-[150px]'>
-                  <UploadWidget buttonName="Upload Image" onUpload={updateImageUrl} class="border-0" />
+                  <div className="md:w-[150px]">
+                     <UploadWidget buttonName="Upload Image" onUpload={updateImageUrl} class="border-0" />
                   </div>
                </div>
 
-               <div>
+               <div onClick={handleSave}>
                   <CheckOutlined />
                   <div>
-                     <Button className="border-0 bg-white w-full md:w-[150px]" type="primary" onClick={handleSave}>
+                     <Button className="border-0 bg-white w-full md:w-[150px]" type="primary">
                         Save
                      </Button>
                   </div>

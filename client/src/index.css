@@ -35,15 +35,19 @@
 }
 
 .ant-btn-primary {
-   border-color: var(--primary-color);
-   color: var(--white-color);
-   background-color: var(--primary-color);
+   color: var(--primary-color);
+   background-color: var(--white-color) !important;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+   color: var(--primary-color);
+   background-color: var(--white-color) !important;
 }
 
 .ant-btn:hover,
 .ant-btn:focus {
-   background-color: var(--primary-color) !important;
-   color: var(--white-color) !important;
+   color: var(--black-color) !important;
 }
 
 .ant-input:focus,

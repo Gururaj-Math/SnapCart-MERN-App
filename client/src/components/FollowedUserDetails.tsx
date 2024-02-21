@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Avatar, Card, Skeleton } from 'antd';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import API_BASE_URL from '../constant';
 import { User } from '../types';
 
@@ -32,13 +33,15 @@ const FollowedUserDetails = (props: { userId: string }) => {
    }
 
    return (
-      <Card style={{ width: 300 }}>
-         <Card.Meta
-            avatar={<Avatar src={userDetails.avatar} />}
-            title={userDetails.username}
-            description={userDetails.bio}
-         />
-      </Card>
+      <Link to={`/profile/${props.userId}`}>
+         <Card style={{ width: 300 }}>
+            <Card.Meta
+               avatar={<Avatar src={userDetails.avatar} />}
+               title={userDetails.username}
+               description={userDetails.bio}
+            />
+         </Card>
+      </Link>
    );
 };
 

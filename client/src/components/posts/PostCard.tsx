@@ -25,58 +25,63 @@ const PostCard: React.FC<PostCardProps> = ({
 }) => {
    const [randomColor, setRandomColor] = useState<string>('');
    const [likeLoading, setLikeLoading] = useState<boolean>(false);
+   const [saveLoading, setSaveLoading] = useState<boolean>(false);
 
    useEffect(() => {
       setRandomColor(getRandomColor());
-   }, []); // Run only once on mount
+   }, []);
 
    const getRandomColor = () => {
       const colors = ['magenta', 'red', 'volcano', 'orange', 'gold'];
       return colors[Math.floor(Math.random() * colors.length)];
    };
 
-   const handleLikeClick = async () => {
+   const handleLikeAction = async () => {
       setLikeLoading(true);
-      await handleLike(post._id);
+      if (currentUser.likedPosts.includes(post._id)) {
+         await handleUnlike(post._id);
+      } else {
+         await handleLike(post._id);
+      }
       setLikeLoading(false);
    };
 
-   const handleUnlikeClick = async () => {
-      setLikeLoading(true); // You may need to update this logic to handle loading state appropriately for unlike action
-      await handleUnlike(post._id);
-      setLikeLoading(false); // You may need to update this logic to handle loading state appropriately for unlike action
+   const handleSaveAction = async () => {
+      setSaveLoading(true);
+      if (currentUser.savedPosts.includes(post._id)) {
+         await handleRemoveSavedPost(post._id);
+      } else {
+         await handleSavePost(post._id);
+      }
+      setSaveLoading(false);
    };
 
    return (
       <Card
          className="md:w-[400px] sm:w-[300px] lg:w-[600px]"
          actions={[
-            likeLoading ? (
-               <Spin size="small" />
-            ) : currentUser.likedPosts.includes(post._id) ? (
-               <div>
-                  <HeartFilled key="like" onClick={handleUnlikeClick} style={{ color: 'red' }} />
-                  <p>{post.likes} Likes</p>
-               </div>
-            ) : (
-               <div>
-                  <HeartOutlined key="unlike" onClick={handleLikeClick} />
-                  <p>{post.likes} Likes</p>
-               </div>
-            ),
-            currentUser.savedPosts.includes(post._id) ? (
-               <div>
-                  <BookFilled key="save" onClick={() => handleRemoveSavedPost(post._id)} />
-                  <p>Unsave Post</p>
-               </div>
-            ) : (
-               <div>
-                  <BookOutlined key="unsave" onClick={() => handleSavePost(post._id)} />
-                  <p>Save Post</p>
-               </div>
-            ),
-            <div>
-               <ShareAltOutlined key="share" onClick={() => handleSharePost(post._id)} />
+            <div key="like" onClick={handleLikeAction}>
+               {likeLoading ? (
+                  <Spin size="small" />
+               ) : currentUser.likedPosts.includes(post._id) ? (
+                  <HeartFilled style={{ color: 'red' }} />
+               ) : (
+                  <HeartOutlined />
+               )}
+               <p>{post.likes} Likes</p>
+            </div>,
+            <div key="save" onClick={handleSaveAction}>
+               {saveLoading ? (
+                  <Spin size="small" />
+               ) : currentUser.savedPosts.includes(post._id) ? (
+                  <BookFilled />
+               ) : (
+                  <BookOutlined />
+               )}
+               <p>{currentUser.savedPosts.includes(post._id) ? 'Unsave Post' : 'Save Post'}</p>
+            </div>,
+            <div key="share" onClick={() => handleSharePost(post._id)}>
+               <ShareAltOutlined />
                <p>Share</p>
             </div>,
          ]}

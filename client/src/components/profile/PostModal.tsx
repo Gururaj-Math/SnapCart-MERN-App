@@ -21,7 +21,7 @@ const PostModal = (props: {
                <p>Description: {props.modalPostData.description}</p>
                <img
                   src={props.modalPostData.image}
-                  className="w-full h-[300px] rounded-md"
+                  className="w-full h-[300px] rounded-md object-cover"
                   alt={props.modalPostData.title}
                />
                <div>

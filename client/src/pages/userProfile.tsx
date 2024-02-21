@@ -44,7 +44,7 @@ const UserProfile = () => {
    useEffect(() => {
       fetchUserById();
       fetchUserPosts();
-   }, []);
+   }, [userId]);
 
    useEffect(() => {
       const checkIfFollowing = async () => {
