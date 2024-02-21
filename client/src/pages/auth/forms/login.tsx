@@ -1,7 +1,7 @@
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { logInStart, logInSuccess, logInFailure } from '../../../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
@@ -23,12 +23,11 @@ const Login = () => {
          const res = await axios.post(`${API_BASE_URL}users/login`, values);
          dispatch(logInSuccess(res.data.data.user));
          navigate('/');
-         console.log('Login successful', res);
          setCookie('access_token', res.data.data.access_token);
-      } catch (error) {
-         dispatch(logInFailure());
-         console.error('Login failed:', error);
-      } finally {
+      } catch (err: any) {
+         message.error("Login failed. Please check your credentials.");
+         dispatch(logInFailure(err))
+       } finally {
          setLoading(false);
       }
    };

@@ -21,6 +21,7 @@ const Register = () => {
          navigate('/auth/login');
          console.log('Registration successful');
       } catch (error) {
+         message.error('Registration Failed');
          console.error('Registration failed:', error);
       } finally {
          setLoading(false);
